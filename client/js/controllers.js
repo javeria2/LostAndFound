@@ -203,6 +203,7 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location',
         $scope.id = $routeParams.id;
         $scope.user = JSON.parse(window.localStorage['user']);
 
+
         /**
          * Get lost items
          */
@@ -238,19 +239,60 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location',
  * Controller for the edit page
  * ========================================
  */
-LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFactory',
-    function($scope, $routeParams, ItemsFactory) {
+LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFactory', 'NgMap',
+    function($scope, $routeParams, ItemsFactory, NgMap) {
 
         $scope.id = $routeParams.id;
+
+        var vm = this;
+        var lat;
+        var lon;
+        vm.types = "['establishment']";
+        vm.placeChanged = function() {
+            console.log("here")
+            vm.place = this.getPlace();
+            console.log('location', vm.place.geometry.location);
+            lat = vm.place.geometry.location.lat();
+            lon = vm.place.geometry.location.lng();
+            vm.map.setCenter(vm.place.geometry.location);
+        }
+        NgMap.getMap().then(function(map) {
+            vm.map = map;
+        });
+
         /**
          * Get lost items
          */
         ItemsFactory.getItemById($scope.id).then(function(item){
                 $scope.item = item['data'][0];
+                console.log($scope.item);
+                $scope.item_name = $scope.item.title;
+                $scope.item_description = $scope.item.description;
+                $scope.item_img = $scope.item.img;
+                lat = $scope.item.locationLat;
+                lon = $scope.item.locationLon;
             },
             function(error) {
                 console.log(error);
             });
+
+        $scope.editItem = function(valid){
+            if(valid){
+
+                var data = {
+                    "title": $scope.item_name,
+                    "description": $scope.item_description,
+                    "locationLat": lat,
+                    "locationLon": lon,
+                    "img": $scope.item_img
+                }
+                ItemsFactory.put(data).then(function(updatedUser){
+                   console.log("user updated!");
+                });
+            }else{
+                console.log("edit failed!");
+            }
+        }
     }]
 );
 
