@@ -255,6 +255,8 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$l
                 $http.get("http://maps.googleapis.com/maps/api/geocode/json?latlng="+ $scope.item.locationLat + ","+$scope.item.locationLon+"&sensor=true")
                 .success(function(data){
                     $scope.address = data.results[0].formatted_address;
+                    $scope.address = $scope.address.substring(0, $scope.address.length - 10);
+                    console.log($scope.address);
                 });
             },
             function(error) {

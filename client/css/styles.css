@@ -225,10 +225,6 @@ body {
   /* vertical gutter */
   margin-bottom: 10px; }
 
-.event-img {
-  background: linear-gradient(transparent, black);
-  width: 100%; }
-
 /*============*/
 /* ITEM FORM */
 /*============*/
