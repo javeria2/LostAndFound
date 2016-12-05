@@ -265,7 +265,7 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFac
  */
 LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
     function($scope, ItemsFactory) {
-        var user = JSON.parse(window.localStorage['user']);
+        if(window.localStorage['user']) var user = JSON.parse(window.localStorage['user']);
 
         /**
          * Get lost items
