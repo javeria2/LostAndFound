@@ -49,6 +49,13 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
 
 LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory',
     function($scope, NgMap, Upload, $timeout, ItemsFactory) {
+
+        var user = JSON.parse(window.localStorage['user']);
+        var id = user._id;
+        var username = user.username;
+        var user_img = user.img;
+        var author = { "id": id, "username": username, "img": user_img };
+
         var lat;
         var lon;
         var images = [];
@@ -219,8 +226,8 @@ function deg2rad(deg) {
  * Controller for the item details page
  * ========================================
  */
-LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', 'ItemsFactory',
-    function($scope, $routeParams, ItemsFactory) {
+LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location', 'ItemsFactory',
+    function($scope, $routeParams, $location, ItemsFactory) {
 
         $scope.id = $routeParams.id;
 
@@ -233,6 +240,19 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', 'ItemsFactor
             function(error) {
                 console.log(error);
             });
+
+        /**
+         * Deleting the current item
+         */
+        $scope.deleteItem = function() {
+            ItemsFactory.delete($scope.id).then(function(item){
+                    console.log("Deleted: ", item);
+                    $location.path( "/listings" );
+                },
+                function(error) {
+                    console.log(error);
+                });
+        };
     }]
 );
 
