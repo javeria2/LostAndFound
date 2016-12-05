@@ -18,19 +18,25 @@ LAFControllers.controller('HomeController', ['$scope',
  */
 LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
     function($scope, $http, $location){
+
+    //initial button text when user is not signed in
     $scope.buttonText = "Login/Sign Up";
     $('.feedback').hide();
+
+    //check if user session is not null
     if(window.localStorage['user']) var user = JSON.parse(window.localStorage['user']);
-        if(user){
+        if(user){ //show logoout buttons
         $('.loginBt').hide();
         $scope.profileImg = user.img;
         $scope.profileName = "Hi " + user.username + "!";
         $scope.profileId = user._id;
         $('.feedback').show();
-    } else {
+    } else { //show login buttons
         $('.loginBt').show();
         $('.feedback').hide();
     }
+
+    //logout 
     $scope.logout = function() {
         $http.get('/api/logout').success(function(res){
             window.localStorage['user'] = null;
@@ -51,6 +57,7 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
 LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'Upload', '$location', '$timeout', 'ItemsFactory', 'multipartForm',
     function(Upload, $scope, NgMap, Upload, $location, $timeout, ItemsFactory, multipartForm) {
 
+        //getters and setters
         var user = JSON.parse(window.localStorage['user']);
         var id = user._id;
         var username = user.username;
@@ -61,7 +68,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
         var lon;
         $scope.img = "";
 
-        //initialize the datepicker
+        //initialize the datepicker and set and fetch values
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year
@@ -78,6 +85,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
         //setting default value for radio btn
         $scope.lost_found = "Lost";
 
+        //google map initializations
         var vm = this;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
@@ -121,6 +129,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
             }
         }
 
+        //post item
         $scope.postItem = function(valid){
             data = {
                 "type": this.lost_found,
@@ -153,10 +162,12 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
 LAFControllers.controller('SearchController', ['$scope', 'NgMap', 'ItemsFactory',
     function($scope, NgMap, ItemsFactory) {
 
+        //map logic
         NgMap.getMap().then(function(map) {
             $scope.map = map;
         });
         $scope.radius = 0;
+
         /**
          * Function that handles getting all the items around a point
          */
@@ -226,6 +237,7 @@ function deg2rad(deg) {
 LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location', 'ItemsFactory',
     function($scope, $routeParams, $location, ItemsFactory) {
 
+        //init getters and setters
         $scope.id = $routeParams.id;
         $scope.user = JSON.parse(window.localStorage['user']);
 
@@ -358,6 +370,7 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
 LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory',
     function($scope, $routeParams, ItemsFactory, UsersFactory) {
 
+        //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
             $scope.user = user['data'];
             return ItemsFactory.getByUserId($routeParams.id);
