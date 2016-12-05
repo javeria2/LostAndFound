@@ -47,8 +47,8 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
  * https://github.com/danialfarid/ng-file-upload
  */
 
-LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory',
-    function($scope, NgMap, Upload, $timeout, ItemsFactory) {
+LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory', 'multipartForm',
+    function($scope, NgMap, Upload, $timeout, ItemsFactory, multipartForm) {
 
         var user = JSON.parse(window.localStorage['user']);
         var id = user._id;
@@ -58,7 +58,7 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
 
         var lat;
         var lon;
-        var images = [];
+        var images = "";
         //setting default value for radio btn
         $scope.lost_found = "Lost";
 
@@ -113,10 +113,12 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
         // };
         var files;
         $scope.fileNameChanged = function(ele) {
-            files = ele;
+            files = ele.files[0];
         }
 
         $scope.postItem = function(valid){
+            multipartForm.post(files);
+            return;
             ItemsFactory.saveImage(files)
             .then(function(data){
                 if(valid){
