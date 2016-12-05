@@ -6,7 +6,7 @@ a class="btn-floating btn-large waves-effect waves-light tooltip" id="back-butto
         <div class="card darken-1">
             <div class="card-content">
                 <div class="card-title">How can MagPie help you today?</div>
-                <p>Post a lost or found item.</p>
+                <p>Edit a lost or found item.</p>
                 <div class="row" id="event-form">
                     <form name = "new_item" enctype="multipart/form-data" ng-controller="PostItemController as vm" ng-submit = "editItem(new_item.$valid)">
 
@@ -16,8 +16,8 @@ a class="btn-floating btn-large waves-effect waves-light tooltip" id="back-butto
 
                             <!-- name -->
                             <div class="input-field">
-                                <input type="text" name="item_name" ng-model = "item_name" id="name" required>
-                                <label for="name">What's the name of the item?</label>
+                                <input type="text" name="item_name" ng-model = "obj.item_name" id="name" ng-value="item.title"required>
+                                <label class="active" for="name">What's the name of the item?</label>
                                 <p ng-show="new_item.item_name.$error.required && !new_item.item_name.$pristine" >Name is required.</p>
                             </div>
                             <!-- When did you find/lose it -->
@@ -39,21 +39,21 @@ a class="btn-floating btn-large waves-effect waves-light tooltip" id="back-butto
 
                         <div class="col s5 offset-s1">
                             <!-- Map -->
-                            <ng-map class="z-depth-1" scrollwheel="false" center = "40.109235624956426,-88.22725569101561"
+                            <ng-map class="z-depth-1" scrollwheel="false" center = "{{item.locationLat}}, {{item.locationLon}}"
                                     style="border: 5px"></ng-map>
                         </div>
 
 
                         <div class="input-field col s12 m6" style="margin-top: 40px;">
                             <!-- Description -->
-                            <input type="text" id="msg" ng-model="item_description">
-                            <label for="msg">Any messages to describe your item better?</label>
+                            <input type="text" id="msg" ng-model="obj.item_description" ng-value = "item.description">
+                            <label class="active" for="msg">Any messages to describe your item better?</label>
                         </div>
 
                         <!-- image -->
                         <div class="input-field col s12 m6" style="margin-top: 40px;">
-                            <input type="text" id="img" ng-model="item_img" class="validate">
-                            <label for="img">Leave a nice image url</label>
+                            <input type="text" id="img" ng-model="obj.item_img" ng-value = "item.img" class="validate">
+                            <label class="active" for="img">Leave a nice image url</label>
                         </div>
                         <div class="center">
                             <input type="submit" value="Edit" ng-disabled="new_item.$invalid" class="post-button">
