@@ -153,6 +153,31 @@ LAFServices.factory('ItemsFactory', function($http, $window, $q, $location) {
     }
 });
 
+/**
+ * ========================================
+ * Factory for users endpoint
+ * ========================================
+ */
+LAFServices.factory('UsersFactory', function($http, $window, $q, $location) {
+    var baseUrl = '/api';
+    return {
+        getUserById: function (id) {
+            return $http.get(baseUrl + '/users/' + id)
+                .then(function (response) {
+                    if (typeof response.data === 'object') {
+                        return response.data;
+                    } else {
+                        // invalid response
+                        return $q.reject(response.data);
+                    }
+                }, function (response) {
+                    // something went wrong
+                    return $q.reject(response.data);
+                });
+        }
+    }
+});
+
 LAFServices.service('multipartForm', ['$http', function($http){
     this.post = function(data){
         console.log(data);

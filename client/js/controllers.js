@@ -288,33 +288,17 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
  * Controller for the profile page
  * ========================================
  */
-LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory',
-    function($scope, $routeParams, ItemsFactory) {
-        console.log("user id", $routeParams.id);
+LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory',
+    function($scope, $routeParams, ItemsFactory, UsersFactory) {
 
-        $scope.user = JSON.parse(window.localStorage['user']);
-
-        ItemsFactory.getByUserId($routeParams.id).then(function(items) {
+        UsersFactory.getUserById($routeParams.id).then(function(user) {
+            $scope.user = user['data'];
+            return ItemsFactory.getByUserId($routeParams.id);
+        }).then(function(items) {
             $scope.items = items['data'];
         }, function(error) {
             console.log("Profile page error:", error);
         });
-
-        ItemsFactory.getLost().then(function(data){
-                console.log(data['data']);
-                $scope.lostItems = data['data'];
-            },
-            function(error) {
-                console.log(error);
-            });
-
-        ItemsFactory.getFound().then(function(data){
-                console.log(data['data']);
-                $scope.foundItems = data['data'];
-            },
-            function(error) {
-                console.log(error);
-            });
     }]
 );
 
