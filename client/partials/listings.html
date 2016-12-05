@@ -1,0 +1,56 @@
+<div ng-include="'partials/navbar.html'"></div>
+
+<div class="section"></div>
+<div class="section"></div>
+<h1>Listings for Lost and Found</h1>
+
+<div class="custom-container">
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs z-depth-1">
+        <li class="tab col s3"><a href="#test1">Lost Items</a></li>
+        <li class="tab col s3"><a class="active" href="#test2">Found Items</a></li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12">
+      <div ng-repeat="lost in lostItems">
+          <p>Title: {{lost.title}}</p>
+          <p>Desc: {{lost.description}}</p>
+          <a href="#/details/{{lost._id}}">Details</a>
+          <hr>
+      </div>
+    </div>
+
+    <div id="test2" class="col s12">
+      <div ng-repeat="found in foundItems">
+          <p>Title: {{found.title}}</p>
+          <p>Desc: {{found.description}}</p>
+          <a href="#/details/{{found._id}}">Details</a>
+          <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="#/postitem">post item</a>
+
+<style type="text/css">
+  body {
+  	font-family: 'Lato';
+  	font-weight: 300;
+    background: rgb(241, 241, 241);
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('ul.tabs').tabs();
+
+    $('.grid').masonry({
+      itemSelector: '.grid-item',
+      columnWidth: 160,
+      gutter: 20
+    });
+  });
+
+</script>

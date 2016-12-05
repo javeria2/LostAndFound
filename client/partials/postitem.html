@@ -1,0 +1,56 @@
+<div ng-include="'partials/navbar.html'"></div>
+
+<form name = "new_item" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
+    <div>
+        <input type = "radio" name = "lost_found" value = "Lost" ng-model = "lost_found" id="Lost"/>
+        <label for="Lost">Lost</label>
+        <input type = "radio" name = "lost_found" value = "Found" ng-model = "lost_found" id="Found"/>
+        <label for="Found">Found</label>
+    </div>
+
+    Item name<br>
+    <input type="text" name="item_name" ng-model = "item_name" placeholder="item name" required><br>
+    <p ng-show="new_item.item_name.$error.required && !new_item.item_name.$pristine" >Name is required.</p>
+
+    Item description<br>
+    <textarea name="message" ng-model = "item_descp" rows="10" cols="50"></textarea><br>
+
+    Enter address of loss/found: <br/>
+    <input places-auto-complete size=80 ng-model="vm.address" component-restrictions="{country:'us'}" on-place-changed="vm.placeChanged()" /> <br/>
+    <div ng-show="vm.place">
+        Address = {{vm.place.formatted_address}} <br/>
+        Location: {{vm.place.geometry.location}}<br/>
+    </div>
+    address : {{vm.address}}
+    <ng-map scrollwheel="false" center = "40.109235624956426,-88.22725569101561"></ng-map>
+
+    Date of Found/Loss: <br>
+    <datepicker>
+        <input type="text" name = "date" ng-model = "date">
+    </datepicker>
+
+    Post Images: <br>
+<!--     <div ngf-drop ngf-select ng-model="files" class="drop-box"
+         ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+         accept="image/*,application/pdf"
+         ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div> -->
+         <label class="import-file">
+            <input type="file" multiple onchange="angular.element(this).scope().fileNameChanged(this)">
+            <div>Import file...</div>
+        </label>
+    Files:
+    <ul>
+        <li ng-repeat="f in files">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
+    </ul>
+
+    <input type="submit" value="Submit" ng-disabled="new_item.$invalid">
+
+</form>
+
+<style type="text/css">
+  body {
+    font-family: 'Lato';
+    font-weight: 300;
+    background: rgb(241, 241, 241);
+  }
+</style>

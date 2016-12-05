@@ -1,0 +1,81 @@
+<div ng-include="'partials/navbar.html'"></div>
+<div class="section"></div>
+<div class="section"></div>
+<ng-map zoom="16"
+        class="z-depth-1"
+        scrollwheel="false"
+        center="current-location"
+        id="custom-map">
+
+    <shape name="circle"
+           stroke-color='#425cf4'
+           stroke-opacity="0.8"
+           stroke-weight="2"
+           center="current-location"
+           radius="100"
+           editable="true">
+    </shape>
+
+    <custom-marker ng-repeat="item in found_items | filter:search"
+            ng-click="showModal(item)"
+            position="{{item.locationLat}},{{item.locationLon}}">
+        <div>
+            <a ng-click="showModal(item)" href='#modal' modal>{{item.title}}</a>
+        </div>
+    </custom-marker>
+
+</ng-map>
+<div class="center">
+  <a class="custom-button custom-button-border" href ng-click="getAroundMe()" id="find-around-me" style="">Find Around Me</a>
+</div>
+<div class="section"></div>
+<div class="container">
+  <div class="row">
+    <div class="col s12 m2"></div>
+    <div class="col s12 m8">
+      <div class="card-panel center">    
+        <!-- <span class="left">Center: {{center}}</span> -->
+        <span>Shown items are within <strong>{{radius | number:2}} km</strong> distance.</span>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="alt-text">Still couldn't find it? Search by name instead: 
+          <input type="text" ng-model="search.title" placeholder="Enter item name..." style="margin-top: 20px; max-width: 85%;">
+          <!-- <div class="section"></div> -->
+          <a id="all-items" class="custom-button custom-button-border" href="#/listings">Or, view all items <i class="icon-arrow-right" style="vertical-align: middle; margin-left: 8px;"></i></a>
+          <div class="section"></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="col s12 m2"></div>
+  </div>
+</div>
+
+<div class="section"></div>
+
+<!-- <div ng-repeat="item in found_items | filter:search">
+    <hr>
+    <p>{{item.title}}</p>
+    <p>{{item.description}}</p>
+</div> -->
+
+<!-- Modal Structure -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h4>{{modalInfo.title}}</h4>
+        <p>{{modalInfo.description}}</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#/details/{{modalInfo._id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Details</a>
+    </div>
+</div>
+
+<style type="text/css">
+  body {
+    font-family: 'Lato';
+    font-weight: 300;
+    background: rgb(241, 241, 241);
+  }
+</style>
+
+

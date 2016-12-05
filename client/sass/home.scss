@@ -1,0 +1,30 @@
+/*==========*/
+/* HOMEPAGE */
+/*==========*/
+.homepage {
+	position: relative;
+	z-index: 2000;
+	font-family: 'Pacifico';
+	background-image: url(../rsrcs/imgs/bg.png);
+    background-repeat: repeat;
+    height: 100vh;
+    color: #fff;
+    .heading-container{
+    	transform: translateY(20vh);
+    	text-align: center;
+	    vertical-align: middle;
+    	.title{
+	    	font-size: 10rem;
+	    	text-shadow: 1px 0px 8px rgba(150, 150, 150, 1);
+	    }
+	    .type-it {
+	    	margin-top: 30px;
+	    	font-size: 3rem;
+	    	color: $base-color;
+	    }
+	    a {
+	    	font-family: 'Lato';
+	    	font-weight: 400;
+	    }
+    }
+}

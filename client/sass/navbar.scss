@@ -1,0 +1,37 @@
+.navbar{
+	position: fixed; 
+	z-index: 1000;
+	width: 100%;
+	text-align: center;
+	background-color: #fff;
+	.cust-container{
+		padding: 10px 0;
+		span.title{
+			font-family: 'Pacifico';
+			color: $base-color;
+			font-size: 2.2rem;
+			letter-spacing: 1.5px;
+		}
+		#search{
+			float:left;
+			margin: 0;
+			padding: 10px;
+			margin-left: 20px;
+			font-weight: 400;
+			font-size: 1rem;
+		}
+		.suffix{
+			color: #e6cf8b;
+		}
+		.buttons {
+			float:right;
+			margin-right: 40px;
+			font-size: 1rem;
+			cursor: pointer;
+			i {
+				vertical-align: middle;
+				font-size:1.4rem;
+			}
+		}
+	}
+}

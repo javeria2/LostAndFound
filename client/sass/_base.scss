@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+
+/*=============*/
+/* BASIC SETUP */
+/*=============*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    color: #262222;
+    font-family: 'Lato', sans-serif;
+    font-size: 25px; /*base font-size*/
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    position: relative;
+}
+
+.custom-header{		
+	text-transform: uppercase;
+}
+
+
+/* BUTTONS */
+.custom-button {
+	&:link,
+	&:visited {
+		text-decoration: none;
+	    color: white;
+	    border-radius: 100px;
+	    display: inline-block; /* to give some padding, a mix between inline and block elements*/
+	    padding: 10px 30px;
+	    font-weight: 200;
+	    margin-top: 30px;
+	    transition: all 0.3s;
+	    border: 1px solid $base-color; /* common attributes to both buttons */
+	}
+}
+
+.custom-button-border{
+	&:link,
+	&:visited{
+    	color: $base-color;
+	}
+	&:hover,
+	&:active {
+		color: white;
+    	background-color: $base-color;
+	}
+}
+
+/*============*/
+/* ANIMATIONS */
+/*============*/
+.page.ng-leave 	{ z-index:9999; }
+.page.ng-enter 	{ z-index:8888; }
+
+.page-home.ng-leave {
+	animation:slideOutLeft 0.5s both ease-in;   
+}
+
+@keyframes slideOutLeft {
+	to { transform: translateX(-100%); }
+}
+
+/*=============*/
+/* SEARCH PAGE */
+/*=============*/
+.custom-marker {
+	font-size: 1.2em;
+	padding: 10px;
+	background: #fff;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: #7F7F7F solid 1px;
+}
+
+.custom-marker:after {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 7px 6px 0;
+	border-color: #fff transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	margin-left: -6px;
+	bottom: -6px;
+	left: 50%;
+}
+
+//CLEARFIX
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */

@@ -1,0 +1,30 @@
+<div class="homepage">
+	<div class="heading-container">
+		<div class="title">Magpie</div>
+		<div class="type-it"></div>
+		<a class="custom-button custom-button-border" href="#/search" leave-on-click="done()">Search for an item</a>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/jquery.typeit/4.3.0/typeit.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//typeIt jquery plugin initialization
+		$('.type-it').typeIt({
+	     speed: 50,
+	     autostart: false,
+	     loop: true
+		}).tiType('Did you lose something?').tiPause(900).tiDelete()
+		.tiType('Or did you find a lost item?').tiPause(900).tiDelete()
+		.tiType('<em>Magpie</em> can help you find your things.').tiPause(900).tiDelete()
+		.tiType('Now you can easily return the item to where it belongs.').tiPause(900).tiDelete();
+	});
+</script>
+
+<style type="text/css">
+  body {
+  	font-family: 'Lato';
+  	font-weight: 300;
+    background: rgb(241, 241, 241);
+  }
+</style>
