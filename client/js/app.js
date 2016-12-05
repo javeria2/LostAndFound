@@ -41,7 +41,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             loggedin: checkLoggedIn
         }
     }).
-    when('/profile/:userId', {
+    when('/profile/:id', {
         templateUrl: 'partials/profile.html',
         controller: 'ProfileController',
         resolve: {

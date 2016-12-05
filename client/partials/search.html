@@ -35,7 +35,7 @@
         <div class="section"></div>
         <div class="section"></div>
         <div class="section"></div>
-        <span>Shown items are within <strong>{{radius | number:2}} mtrs</strong> distance.</span>
+        <span>Shown items are within <strong>{{radius | number:2}}m</strong> distance.</span>
         <div class="section"></div>
         <div class="section"></div>
         <div class="alt-text">Still couldn't find it? Search by name instead: 
@@ -56,12 +56,6 @@
 
 <div class="section"></div>
 
-<!-- <div ng-repeat="item in found_items | filter:search">
-    <hr>
-    <p>{{item.title}}</p>
-    <p>{{item.description}}</p>
-</div> -->
-
 <!-- Modal Structure -->
 <div id="modal" class="modal">
     <div class="modal-content">
@@ -72,6 +66,8 @@
         <a href="#/details/{{modalInfo._id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Details</a>
     </div>
 </div>
+
+<div ng-include="'partials/footer.html'"></div>
 
 <style type="text/css">
   body {

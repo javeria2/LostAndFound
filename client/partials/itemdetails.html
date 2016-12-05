@@ -6,8 +6,8 @@
 <h1>Details</h1>
 
 <hr>
-<h2>Belongs to {{user.username}}</h2>
-<a href="#/profile/{{user._id}}">Go to profile</a>
+<h2>Belongs to {{item.author.username}}</h2>
+<a href="#/profile/{{item.author.id}}">Go to profile</a>
 
 <hr>
 <p>{{item.type}}</p>
@@ -28,4 +28,5 @@
     <a ng-click="deleteItem()">Delete</a>
 </div>
 
+<div ng-include="'partials/footer.html'"></div>
 
