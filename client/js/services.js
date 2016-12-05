@@ -137,8 +137,8 @@ LAFServices.factory('ItemsFactory', function($http, $window, $q, $location) {
                 });
         },
         saveImage: function(img) {
-            console.log(img);
-            return $http.post(baseUrl + '/saveImage', img)
+            console.log(img.files[0]);
+            return $http.post(baseUrl + '/saveImage', img.files)
             .then(function(response){
                 if (typeof response.data === 'object') {
                         return response.data;
@@ -152,4 +152,19 @@ LAFServices.factory('ItemsFactory', function($http, $window, $q, $location) {
         }
     }
 });
+
+LAFServices.service('multipartForm', ['$http', function($http){
+    this.post = function(data){
+        console.log(data);
+        var fd = new FormData();
+        for(var key in data) {
+            fd.append(key, data[key]);
+        }
+        console.log(fd);
+        $http.post('/api/saveImage', fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        });
+    }
+}]);    
 

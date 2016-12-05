@@ -8,6 +8,7 @@
 <p>{{item.title}}</p>
 <p>{{item.description}}</p>
 <p>{{item.postDate}}</p>
+<a ng-click="deleteItem()">Delete</a>
 <ng-map center="{{item.locationLat}},{{item.locationLon}}"
         zoom="14"
         class="z-depth-1"

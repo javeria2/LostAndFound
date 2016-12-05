@@ -8,7 +8,7 @@ var ItemSchema = new mongoose.Schema({
     locationLon: Number,
     postDate: { type: Date, default: Date.now },
     date: Date,
-    img: { data: Buffer, contentType: String },
+    img: String,
     author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,

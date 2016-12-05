@@ -49,37 +49,55 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
 
 LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory', 'multipartForm',
     function($scope, NgMap, Upload, $timeout, ItemsFactory, multipartForm) {
+
+        var user = JSON.parse(window.localStorage['user']);
+        var id = user._id;
+        var username = user.username;
+        var user_img = user.img;
+        var author = { "id": id, "username": username, "img": user_img };
+
         var lat;
         var lon;
-        var images = [];
+        var images = "";
+
         //setting default value for radio btn
         $scope.lost_found = "Lost";
 
         var vm = this;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
-            console.log("here")
             vm.place = this.getPlace();
-            console.log('location', vm.place.geometry.location);
+
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
             vm.map.setCenter(vm.place.geometry.location);
-        }
+        };
+
         NgMap.getMap().then(function(map) {
             vm.map = map;
         });
 
-        $scope.item = {};
         $scope.postItem = function(valid){
-            if(valid){
-                console.log($scope.item);
-                var uploadUrl = '/api/saveImage';
-                multipartForm.post(uploadUrl, $scope.item);
-            }else {
-                console.log("error in posting new item");
+
+            data = {
+                "type": this.lost_found,
+                "title": this.item_name,
+                "description": this.item_descp,
+                "locationLat": lat,
+                "locationLon": lon,
+                "date": this.date,
+                "img": images,
+                "author": author
+            };
+
+            if (valid) {
+                ItemsFactory.post(data).then(function(addedItem){
+                    console.log("Post successful:", addedItem);
+                }, function(error){
+                    console.log(error);
+                });
             }
         }
-
     }]
 );
 
@@ -161,8 +179,8 @@ function deg2rad(deg) {
  * Controller for the item details page
  * ========================================
  */
-LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', 'ItemsFactory',
-    function($scope, $routeParams, ItemsFactory) {
+LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location', 'ItemsFactory',
+    function($scope, $routeParams, $location, ItemsFactory) {
 
         $scope.id = $routeParams.id;
 
@@ -176,6 +194,19 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', 'ItemsFactor
             function(error) {
                 console.log(error);
             });
+
+        /**
+         * Deleting the current item
+         */
+        $scope.deleteItem = function() {
+            ItemsFactory.delete($scope.id).then(function(item){
+                    console.log("Deleted: ", item);
+                    $location.path( "/listings" );
+                },
+                function(error) {
+                    console.log(error);
+                });
+        };
     }]
 );
 

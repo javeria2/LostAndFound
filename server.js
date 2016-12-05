@@ -9,8 +9,7 @@ var express        = require('express'),
     cookieParser   = require('cookie-parser');
 
 var authRoutes     = require('./routes/auth'),
-    User           = require('./models/user'),
-    saveImage      = require('./routes/saveImage');
+    User           = require('./models/user');
 
 // Create our Express application
 var app = express();
@@ -57,7 +56,6 @@ app.use(express.static(__dirname + "/client"));
 
 // Use routes as a module (see index.js)
 require('./routes')(app, router);
-app.use('/api', saveImage);
 app.use('/api', authRoutes);
 
 
