@@ -1,0 +1,48 @@
+#profile-bg {
+	
+
+
+background: #4CA1AF; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #4CA1AF , #C4E0E5); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #4CA1AF , #C4E0E5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+	img {
+		max-width: 200px;
+		margin-top: 30px;
+		+ p{
+			font-size: 2.5rem;
+			font-weight: 300;
+			padding-bottom: 10px;
+		}
+	}
+	a {
+		color: #000;
+	}
+}
+
+.delete_edit {
+	background-color: $base-color;
+	i {
+		font-size: 2rem;
+		margin-top: 20px;
+	}
+	.fa-pencil-square-o {
+		color: #ffd54f ;
+	}
+	.fa-trash {
+		color: #f44336;
+	}
+}
+
+.item_info {
+	line-height: 70px;
+	p.title {
+		font-weight: 300;
+		font-size: 3rem;
+		padding-top: 20px;
+		color: #424242;
+	}
+	#desc {
+		color: #616161;
+	}
+}

@@ -2,31 +2,90 @@
 
 <div class="section"></div>
 <div class="section"></div>
+<div class="section"></div>
+<div class="section"></div>
 
-<h1>Details</h1>
+<div class="container">
+	<div class="card" style="overflow: hidden;">
+		<div class="row" style='margin: 0;'>
 
-<hr>
-<h2>Belongs to {{item.author.username}}</h2>
-<a href="#/profile/{{item.author.id}}">Go to profile</a>
+			<!-- MAP -->
+			<div class="col s6" style="padding: 0;">
+				<ng-map center="{{item.locationLat}},{{item.locationLon}}"
+	        	zoom="14"
+	        	class="z-depth-1"
+	        	scrollwheel="false" style="height: 840px; z-index: 999; position: relative;">
 
-<hr>
-<p>{{item.type}}</p>
-<p>{{item.title}}</p>
-<p>{{item.description}}</p>
-<p>{{item.postDate}}</p>
-<ng-map center="{{item.locationLat}},{{item.locationLon}}"
-        zoom="14"
-        class="z-depth-1"
-        scrollwheel="false">
+	    			<marker position="{{item.locationLat}},{{item.locationLon}}"></marker>
+				</ng-map>
+			</div>
 
-    <marker position="{{item.locationLat}},{{item.locationLon}}"></marker>
-</ng-map>
+			<!-- DETAILS -->
+			<div class="col s6" style="padding:0;">
+				<div class="row">
+					<!-- OWNER -->
+					<div class="col s12" id="profile-bg">
+						<div class="center">
+							<a href="#/profile/{{item.author.id}}">
+								<img ng-src={{item.author.img}} class="circle responsive-img">
+								<p>{{item.author.username}}</p>
+							</a>
+						</div>
+					</div>
 
-<div class="delete_edit">
-    <a href="#/edit/{{id}}">Edit</a>
-    <hr>
-    <a ng-click="deleteItem()">Delete</a>
+					<!-- EDIT AND DELETE -->
+					<div class="col s12 delete_edit z-depth-1">
+						<div class="row">
+							<!-- EDIT -->
+							<div class="col s6 center">
+								<a href="#/edit/{{id}}" class="tooltip" title="edit item"><i class="fa fa-pencil-square-o"></i></a>
+							</div>
+							<!-- DELETE -->
+							<div class="col s6 center">
+    							<a ng-click="deleteItem()" class="tooltip" title="delete item"><i class="fa fa-trash"></i></a>
+							</div>
+						</div>
+					</div>
+
+					<!-- DETAILS -->
+					<div class="col s12 item_info">
+						<div class="center">
+							<p class="title"><em>{{item.title}}</em></p>
+							<span><strong>about: </strong></span>
+							<span id="desc">{{item.description}}</span>
+							<p>This <em>{{item.type | lowercase}}</em> item by the numbers: </p>
+							<table class="striped">
+								<tbody>
+									<tr>
+										<td class="center" style="padding: 0">Where? <span class="chip" style="vertical-align: middle;">{{item.type}} near, {{address}}</span></td>
+									</tr>
+									<tr>
+										<td class="center" style="padding: 0">When? <span class="chip" style="vertical-align: middle;">{{item.type}} on, {{item.date | date:'EEEE, MMMM d'}} {{item.date | date:'shortTime'}}</span></td>
+									</tr>
+									<tr>
+										<td class="center" style="padding: 0">Posted on? <span class="chip" style="vertical-align: middle;">{{item.postDate | date:'EEEE, MMMM d'}} {{item.postDate | date:'shortTime'}}</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
 </div>
+
+<div class="section"></div>
+<div class="section"></div>
 
 <div ng-include="'partials/footer.html'"></div>
 
+<style type="text/css">
+  body {
+  	font-family: 'Lato';
+  	font-weight: 300;
+    background: rgb(241, 241, 241);
+  }
+</style>

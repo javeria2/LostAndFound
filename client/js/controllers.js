@@ -234,8 +234,8 @@ function deg2rad(deg) {
  * Controller for the item details page
  * ========================================
  */
-LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location', 'ItemsFactory',
-    function($scope, $routeParams, $location, ItemsFactory) {
+LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$location', 'ItemsFactory',
+    function($scope, $http, $routeParams, $location, ItemsFactory) {
 
         //init getters and setters
         $scope.id = $routeParams.id;
@@ -252,6 +252,10 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location',
                 } else {
                     $('.delete_edit').hide();
                 }
+                $http.get("http://maps.googleapis.com/maps/api/geocode/json?latlng="+ $scope.item.locationLat + ","+$scope.item.locationLon+"&sensor=true")
+                .success(function(data){
+                    $scope.address = data.results[0].formatted_address;
+                });
             },
             function(error) {
                 console.log(error);
