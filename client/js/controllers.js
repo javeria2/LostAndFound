@@ -294,7 +294,7 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
 
         $scope.user = JSON.parse(window.localStorage['user']);
 
-        ItemsFactory.getByUserId($scope.user._id).then(function(items) {
+        ItemsFactory.getByUserId($routeParams.id).then(function(items) {
             $scope.items = items['data'];
         }, function(error) {
             console.log("Profile page error:", error);
