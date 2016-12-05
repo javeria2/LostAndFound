@@ -160,10 +160,11 @@ body {
         vertical-align: middle;
         font-size: 1.4rem; }
 
-#custom-map {
+#custom-map,
+#search-details {
   position: relative;
   top: 10px;
-  height: 60vh; }
+  height: 75vh; }
 
 #find-around-me {
   margin-top: 35px !important;

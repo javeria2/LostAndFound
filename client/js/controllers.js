@@ -68,42 +68,7 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
         NgMap.getMap().then(function(map) {
             vm.map = map;
         });
-
-        //Uploading images
-        // $scope.$watch('files', function () {
-        //     $scope.upload($scope.files);
-        // });
-        // $scope.$watch('file', function () {
-        //     if ($scope.file != null) {
-        //         $scope.files = [$scope.file];
-        //     }
-        // });
-        // $scope.log = '';
-
-        // $scope.upload = function (files) {
-        //     if (files && files.length) {
-        //         for (var i = 0; i < files.length; i++) {
-        //             images.push(files[i]);
-        //             var file = files[i];
-        //             if (!file.$error) {
-        //                 Upload.upload({
-        //                     url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-        //                     data: {
-        //                         username: $scope.username,
-        //                         file: file
-        //                     }
-        //                 }).then(function (resp) {
-        //                     $timeout(function() {
-        //                         $scope.log = 'file: ' +
-        //                             resp.config.data.file.name +
-        //                             ', Response: ' + JSON.stringify(resp.data) +
-        //                             '\n' + $scope.log;
-        //                     });
-        //                 });
-        //             }
-        //         }
-        //     }
-        // };
+        
         var files;
         $scope.fileNameChanged = function(ele) {
             files = ele.files[0];
