@@ -1,40 +1,40 @@
 <div ng-include="'partials/navbar.html'"></div>
 <div class="section"></div>
 <div class="section"></div>
-<ng-map zoom="16"
-        class="z-depth-1"
-        scrollwheel="false"
-        center="current-location"
-        id="custom-map">
+<div class="row">
+  <div class="col s12 m8" style="padding: 0 !important;">
+    <ng-map zoom="16"
+            class="z-depth-1"
+            scrollwheel="false"
+            center="current-location"
+            id="custom-map">
 
-    <shape name="circle"
-           stroke-color='#425cf4'
-           stroke-opacity="0.8"
-           stroke-weight="2"
-           center="current-location"
-           radius="100"
-           editable="true">
-    </shape>
+        <shape name="circle"
+               stroke-color='#425cf4'
+               stroke-opacity="0.8"
+               stroke-weight="2"
+               center="current-location"
+               radius="100"
+               editable="true">
+        </shape>
 
-    <custom-marker ng-repeat="item in found_items | filter:search"
-            ng-click="showModal(item)"
-            position="{{item.locationLat}},{{item.locationLon}}">
-        <div>
-            <a ng-click="showModal(item)" href='#modal' modal>{{item.title}}</a>
-        </div>
-    </custom-marker>
+        <custom-marker ng-repeat="item in found_items | filter:search"
+                ng-click="showModal(item)"
+                position="{{item.locationLat}},{{item.locationLon}}">
+            <div>
+                <a ng-click="showModal(item)" href='#modal' modal>{{item.title}}</a>
+            </div>
+        </custom-marker>
 
-</ng-map>
-<div class="center">
-  <a class="custom-button custom-button-border" href ng-click="getAroundMe()" id="find-around-me" style="">Find Around Me</a>
-</div>
-<div class="section"></div>
-<div class="container">
-  <div class="row">
-    <div class="col s12 m2"></div>
-    <div class="col s12 m8">
-      <div class="card-panel center">    
-        <!-- <span class="left">Center: {{center}}</span> -->
+    </ng-map>
+  </div>
+  <div class="col s12 m4" style="padding: 0 !important;">
+    <div class="card-panel center" id="search-details" style="margin: 0 !important;">    
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
         <span>Shown items are within <strong>{{radius | number:2}} km</strong> distance.</span>
         <div class="section"></div>
         <div class="section"></div>
@@ -46,10 +46,13 @@
         </div>
         <div class="clearfix"></div>
       </div>
-    </div>
-    <div class="col s12 m2"></div>
   </div>
 </div>
+<div class="center">
+  <a class="custom-button custom-button-border" href ng-click="getAroundMe()" id="find-around-me" style="">Find Around Me</a>
+</div>
+<div class="section"></div>
+
 
 <div class="section"></div>
 

@@ -77,7 +77,6 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
             vm.map = map;
         });
 
-
         $scope.postItem = function(valid){
 
             data = {
