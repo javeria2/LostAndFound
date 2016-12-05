@@ -47,8 +47,8 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
  * https://github.com/danialfarid/ng-file-upload
  */
 
-LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory',
-    function($scope, NgMap, Upload, $timeout, ItemsFactory) {
+LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory', 'multipartForm',
+    function($scope, NgMap, Upload, $timeout, ItemsFactory, multipartForm) {
         var lat;
         var lon;
         var images = [];
@@ -69,73 +69,15 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
             vm.map = map;
         });
 
-        //Uploading images
-        // $scope.$watch('files', function () {
-        //     $scope.upload($scope.files);
-        // });
-        // $scope.$watch('file', function () {
-        //     if ($scope.file != null) {
-        //         $scope.files = [$scope.file];
-        //     }
-        // });
-        // $scope.log = '';
-
-        // $scope.upload = function (files) {
-        //     if (files && files.length) {
-        //         for (var i = 0; i < files.length; i++) {
-        //             images.push(files[i]);
-        //             var file = files[i];
-        //             if (!file.$error) {
-        //                 Upload.upload({
-        //                     url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-        //                     data: {
-        //                         username: $scope.username,
-        //                         file: file
-        //                     }
-        //                 }).then(function (resp) {
-        //                     $timeout(function() {
-        //                         $scope.log = 'file: ' +
-        //                             resp.config.data.file.name +
-        //                             ', Response: ' + JSON.stringify(resp.data) +
-        //                             '\n' + $scope.log;
-        //                     });
-        //                 });
-        //             }
-        //         }
-        //     }
-        // };
-        var files;
-        $scope.fileNameChanged = function(ele) {
-            files = ele;
-        }
-
+        $scope.item = {};
         $scope.postItem = function(valid){
-            ItemsFactory.saveImage(files)
-            .then(function(data){
-                if(valid){
-                    data = {
-                        "type": this.lost_found,
-                        "title": this.item_name,
-                        "description": this.item_descp,
-                        "locationLat": lat,
-                        "locationLon": lon,
-                        "date": this.date,
-                        "img": images
-                    };
-                    ItemsFactory.post(data).then(function(addedItem){
-                        alert("Item added!");
-                    }, function(error){
-                        console.log(error);
-                        return;
-                    });
-
-                }else{
-                    console.log("Error posting item!");
-                }
-            }, function(error){
-                console.log(error);
-                return;
-            });
+            if(valid){
+                console.log($scope.item);
+                var uploadUrl = '/api/saveImage';
+                multipartForm.post(uploadUrl, $scope.item);
+            }else {
+                console.log("error in posting new item");
+            }
         }
 
     }]
@@ -224,6 +166,7 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', 'ItemsFactor
 
         $scope.id = $routeParams.id;
 
+
         /**
          * Get lost items
          */
@@ -241,16 +184,32 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', 'ItemsFactor
  * Controller for the edit page
  * ========================================
  */
-LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFactory',
-    function($scope, $routeParams, ItemsFactory) {
+LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFactory', 'NgMap',
+    function($scope, $routeParams, ItemsFactory, NgMap) {
 
         $scope.id = $routeParams.id;
 
+        var vm = this;
+        vm.types = "['establishment']";
+        vm.placeChanged = function() {
+            console.log("here")
+            vm.place = this.getPlace();
+            console.log('location', vm.place.geometry.location);
+            lat = vm.place.geometry.location.lat();
+            lon = vm.place.geometry.location.lng();
+            vm.map.setCenter(vm.place.geometry.location);
+        }
+        NgMap.getMap().then(function(map) {
+            vm.map = map;
+        });
         /**
          * Get lost items
          */
         ItemsFactory.getItemById($scope.id).then(function(item){
                 $scope.item = item['data'][0];
+                $scope.item_name = $scope.item.title;
+                $scope.item_description = $scope.item.description;
+                $scope.item_img = $scope.item.img;
             },
             function(error) {
                 console.log(error);

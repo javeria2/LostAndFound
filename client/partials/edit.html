@@ -1,14 +1,36 @@
 <div ng-include="'partials/navbar.html'"></div>
 
-<div class="section"></div>
-<div class="section"></div>
+<form name = "new_item" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
+    <div>
+        <input type = "radio" name = "lost_found" value = "Lost" ng-model = "item_type" id="Lost"/>
+        <label for="Lost">Lost</label>
+        <input type = "radio" name = "lost_found" value = "Found" ng-model = "item_type" id="Found"/>
+        <label for="Found">Found</label>
+    </div>
+    {{item.type}}
+    Item name<br>
+    <input type="text" name="item_name" ng-model = "item_name" placeholder="item name" required><br>
+    <p ng-show="new_item.item_name.$error.required && !new_item.item_name.$pristine" >Name is required.</p>
+    {{item.title}}
+    Item description<br>
+    <textarea name="message" ng-model = "item_description" rows="10" cols="50"></textarea><br>
+    {{item.description}}
+    Enter address of loss/found: <br/>
+    <input places-auto-complete size=80 ng-model="vm.address" component-restrictions="{country:'us'}" on-place-changed="vm.placeChanged()" /> <br/>
+    <div ng-show="vm.place">
+        Address = {{vm.place.formatted_address}} <br/>
+        Location: {{vm.place.geometry.location}}<br/>
+    </div>
+    address : {{vm.address}}
+    <ng-map scrollwheel="false" center = "40.109235624956426,-88.22725569101561"></ng-map>
 
-<h1>Edit: {{item.title}}</h1>
-<form action="">
+    Enter image url: <br>
+    <input type="text" name="item_img" ng-model = "item_img" placeholder="item image url"><br>
+
+    <input type="submit" value="Submit" ng-disabled="new_item.$invalid">
 
 </form>
 
-helllooo!
 
 <style type="text/css">
   body {
