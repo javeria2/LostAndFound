@@ -340,11 +340,13 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
     function($scope, ItemsFactory) {
         if(window.localStorage['user']) var user = JSON.parse(window.localStorage['user']);
 
+        var lostItems = [], foundItems = [];
         /**
          * Get lost items
          */
         ItemsFactory.getLost().then(function(data){
-                $scope.lostItems = data['data'];
+                lostItems = data['data'];
+                $scope.lostItems = lostItems;
             },
             function(error) {
                 console.log(error);
@@ -354,11 +356,18 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
          * Get found items
          */
         ItemsFactory.getFound().then(function(data){                
-                $scope.foundItems = data['data'];
+                foundItems = data['data'];
             },
             function(error) {
                 console.log(error);
             });
+
+        $scope.changeToFound = function() {
+            $scope.lostItems = foundItems;
+        }
+        $scope.changeToLost = function() {
+            $scope.lostItems = lostItems;
+        }
     }]
 );
 

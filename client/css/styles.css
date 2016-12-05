@@ -43,6 +43,11 @@ body {
   color: white;
   background-color: #89bdd3; }
 
+a:focus,
+button:focus,
+input[type="submit"]:focus {
+  outline: none !important; }
+
 /*============*/
 /* ANIMATIONS */
 /*============*/

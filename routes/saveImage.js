@@ -21,7 +21,7 @@ router.post('/saveImage', multipartMiddleware, function(req, res){
 		+ file.name);
 
 	//actual path to return
-	var savePath = '/../uploads/' + uploadDate + file.name;
+	var savePath = '../uploads/' + uploadDate + file.name;
 
 	//rename the path
 	fs.rename(tempPath, targetPath, function(err){

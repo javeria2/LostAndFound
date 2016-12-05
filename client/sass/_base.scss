@@ -55,6 +55,14 @@ body {
 	}
 }
 
+a,
+button,
+input[type="submit"] {
+	&:focus {
+		outline: none !important;
+	}
+}
+
 /*============*/
 /* ANIMATIONS */
 /*============*/
