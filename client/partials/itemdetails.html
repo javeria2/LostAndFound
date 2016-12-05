@@ -4,11 +4,16 @@
 <div class="section"></div>
 
 <h1>Details</h1>
+
+<hr>
+<h2>Belongs to {{user.username}}</h2>
+<a href="#/profile/{{user._id}}">Go to profile</a>
+
+<hr>
 <p>{{item.type}}</p>
 <p>{{item.title}}</p>
 <p>{{item.description}}</p>
 <p>{{item.postDate}}</p>
-<a ng-click="deleteItem()">Delete</a>
 <ng-map center="{{item.locationLat}},{{item.locationLon}}"
         zoom="14"
         class="z-depth-1"
@@ -17,5 +22,10 @@
     <marker position="{{item.locationLat}},{{item.locationLon}}"></marker>
 </ng-map>
 
-<a href="#/edit/{{id}}">Edit</a>
+<div class="delete_edit">
+    <a href="#/edit/{{id}}">Edit</a>
+    <hr>
+    <a ng-click="deleteItem()">Delete</a>
+</div>
+
 

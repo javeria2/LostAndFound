@@ -25,6 +25,7 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
         $('.loginBt').hide();
         $scope.profileImg = user.img;
         $scope.profileName = "Hi " + user.username + "!";
+        $scope.profileId = user._id;
         $('.feedback').show();
     } else {
         $('.loginBt').show();
@@ -198,6 +199,7 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location, ItemsFactory) {
 
         $scope.id = $routeParams.id;
+        $scope.user = JSON.parse(window.localStorage['user']);
 
 
         /**
@@ -205,6 +207,11 @@ LAFControllers.controller('ItemDetails', ['$scope', '$routeParams', '$location',
          */
         ItemsFactory.getItemById($scope.id).then(function(item){
                 $scope.item = item['data'][0];
+                if ($scope.item.author.id === $scope.user._id) {
+                    $('.delete_edit').show();
+                } else {
+                    $('.delete_edit').hide();
+                }
             },
             function(error) {
                 console.log(error);
@@ -248,6 +255,7 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFac
         NgMap.getMap().then(function(map) {
             vm.map = map;
         });
+
         /**
          * Get lost items
          */
@@ -318,6 +326,7 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
  */
 LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory',
     function($scope, $routeParams, ItemsFactory) {
+        console.log("user id", $routeParams.id);
 
         $scope.user = JSON.parse(window.localStorage['user']);
 
