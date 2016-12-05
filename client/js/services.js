@@ -7,7 +7,7 @@ var LAFServices = angular.module('LAFServices', []);
 */
 LAFServices.factory('ItemsFactory', function($http, $window, $q, $location) {
     // var baseUrl = 'http://fa16-cs498rk-050.cs.illinois.edu:4000/api';
-    var baseUrl = 'http://localhost:4000/api';
+    var baseUrl = '/api';
     return {
         getLost : function() {
             return $http.get(baseUrl+'/items?where={"type": "Lost"}')

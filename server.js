@@ -31,38 +31,37 @@ var allowCrossDomain = function(req, res, next) {
 var connectionString = secrets.token + secrets.mongo_connection;
 mongoose.connect(connectionString);
 var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-    console.log('Connected to database!');
-    app.use(allowCrossDomain);
 
-    // Use the body-parser package in our application
-    app.use(bodyParser.urlencoded({extended: true}));
-    app.use(bodyParser.json());
+console.log('Connected to database!');
+app.use(allowCrossDomain);
 
-    app.use('/scripts', express.static(path.join(__dirname, '/node_modules')));
-    app.use(express.static(__dirname + "/client"));
-    
-    //passport configuration for OAuth
-     app.use(cookieParser('magpie is amazing'));
-     app.use(require('express-session')({
-         secret: 'magpie is amazing',
-         resave: false,
-         saveUninitialized: false
-     }));
-     app.use(passport.initialize());
-     app.use(passport.session());
-     passport.use(new LocalStrategy(User.authenticate()));
-     passport.serializeUser(User.serializeUser());
-     passport.deserializeUser(User.deserializeUser());
+// Use the body-parser package in our application
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-    // Use routes as a module (see index.js)
-    require('./routes')(app, router);
-    app.use('/api', saveImage);
-    app.use('/api', authRoutes);
+app.use('/scripts', express.static(path.join(__dirname, '/node_modules')));
+app.use(express.static(__dirname + "/client"));
+
+//passport configuration for OAuth
+ app.use(cookieParser('magpie is amazing'));
+ app.use(require('express-session')({
+     secret: 'magpie is amazing',
+     resave: false,
+     saveUninitialized: false
+ }));
+ app.use(passport.initialize());
+ app.use(passport.session());
+ passport.use(new LocalStrategy(User.authenticate()));
+ passport.serializeUser(User.serializeUser());
+ passport.deserializeUser(User.deserializeUser());
+
+// Use routes as a module (see index.js)
+require('./routes')(app, router);
+app.use('/api', saveImage);
+app.use('/api', authRoutes);
 
 
-    // Start the server
-    app.listen(port);
-    console.log('Server running on port ' + port);
-// });
+// Start the server
+app.listen(port);
+console.log('Server running on port ' + port);
+

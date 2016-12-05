@@ -20,7 +20,7 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
     function($scope, $http, $location){
     $scope.buttonText = "Login/Sign Up";
     $('.feedback').hide();
-    var user = JSON.parse(window.localStorage['user']);
+    if(window.localStorage['user']) var user = JSON.parse(window.localStorage['user']);
         if(user){
         $('.loginBt').hide();
         $scope.profileImg = user.img;
@@ -31,7 +31,7 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
         $('.feedback').hide();
     }
     $scope.logout = function() {
-        $http.get('http://localhost:4000/api/logout').success(function(res){
+        $http.get('/api/logout').success(function(res){
             window.localStorage['user'] = null;
             $('.loginBt').show();
             $('.feedback').hide();
