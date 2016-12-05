@@ -245,6 +245,23 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFac
             function(error) {
                 console.log(error);
             });
+
+        $scope.editItem = function(valid){
+            if(valid){
+                var data = {
+                    "title": $scope.item_name,
+                    "description": $scope.item_description,
+                    "locationLat": lat,
+                    "locationLon": lon,
+                    "img": $scope.item_img
+                }
+                ItemsFactory.put(data).then(function(updatedUser){
+                   console.log("user updated!");
+                });
+            }else{
+                console.log("edit failed!");
+            }
+        }
     }]
 );
 
