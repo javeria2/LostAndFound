@@ -6,10 +6,13 @@ var express        = require('express'),
     secrets        = require('./config/secrets'),
     passport       = require('passport'),
     LocalStrategy  = require('passport-local'),
-    cookieParser   = require('cookie-parser');
+    cookieParser   = require('cookie-parser'),
+    multipart      = require('connect-multiparty'),
+    multipartMiddleware = multipart();
 
 var authRoutes     = require('./routes/auth'),
-    User           = require('./models/user');
+    User           = require('./models/user'),
+    saveImage      = require('./routes/saveImage');
 
 // Create our Express application
 var app = express();
@@ -38,6 +41,8 @@ app.use(allowCrossDomain);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.use(multipartMiddleware);
+
 app.use('/scripts', express.static(path.join(__dirname, '/node_modules')));
 app.use(express.static(__dirname + "/client"));
 
@@ -57,6 +62,7 @@ app.use(express.static(__dirname + "/client"));
 // Use routes as a module (see index.js)
 require('./routes')(app, router);
 app.use('/api', authRoutes);
+app.use('/api', saveImage);
 
 
 // Start the server

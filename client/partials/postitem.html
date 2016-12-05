@@ -20,7 +20,7 @@
 
                         <div class="section"></div>
 
-                        <div class="col s6">
+                        <div class="col s6" style="margin-top: 20px;">
 
                             <!-- name -->
                             <div class="input-field">
@@ -30,13 +30,9 @@
                             </div>
                             <!-- When did you find/lose it -->
                             <div class="input-field" id="date">
-                                <p class="date-label">When did you find/lose it?</p>
-                                <input type="text" class="datepicker">
+                                <input type="text" id="date" class="datepicker">
+                                <label for="date">When did you find/lose it?</label>
                             </div>
-
-                            <div class="section"></div>
-                            <div class="section"></div>
-                            <div class="section"></div>
 
                             <!-- Where -->
                             <div class="input-field">
@@ -54,16 +50,25 @@
                         </div>
 
 
-                        <div class="input-field col s12 m6" style="margin-top: 40px;">
+                        <div class="input-field col s12 m6" style="margin-top: 35px;">
                             <!-- Description -->
                             <input type="text" id="msg" ng-model="item_descp">
                             <label for="msg">Any messages to describe your item better?</label>
                         </div>
 
-                        <!-- image -->
-                        <div class="input-field col s12 m6" style="margin-top: 40px;"> 
-                          <input type="text" id="img" ng-model="img" class="validate">
-                          <label for="img">Leave a nice image url</label>
+                        <!-- image upload -->
+                        <div class="input-field col s12 m6" style="margin-top: 20px;">
+                            <div class="file-field input-field">
+                              <div class="btn"
+                              ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-resize="{width: 800, height: 800}">
+                                <span><i class="fa fa-cloud-upload" style="font-size: 2rem;"></i></span>
+                                <input type="file" multiple>
+                              </div>
+                              <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Upload a nice picture describing your item...">
+                              </div>
+                            </div>
                         </div>
                         <div class="center">
                             <input type="submit" value="Post" ng-disabled="new_item.$invalid" class="post-button">

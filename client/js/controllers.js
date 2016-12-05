@@ -48,8 +48,8 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
  * https://github.com/danialfarid/ng-file-upload
  */
 
-LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$location', '$timeout', 'ItemsFactory', 'multipartForm',
-    function($scope, NgMap, Upload, $location, $timeout, ItemsFactory, multipartForm) {
+LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'Upload', '$location', '$timeout', 'ItemsFactory', 'multipartForm',
+    function(Upload, $scope, NgMap, Upload, $location, $timeout, ItemsFactory, multipartForm) {
 
         var user = JSON.parse(window.localStorage['user']);
         var id = user._id;
@@ -94,8 +94,34 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
             vm.map = map;
         });
 
-        $scope.postItem = function(valid){
 
+        //image upload logic
+        $scope.$watch(function(){
+            return $scope.file
+        }, function(){
+            $scope.upload($scope.file);
+        });
+
+        var imgPath;
+        $scope.upload = function(file) {
+            if(file) {
+                Upload.upload({
+                    url: '/api/saveImage',
+                    method: 'POST',
+                    data: {
+                        file: file
+                    }
+                }).progress(function(evt){
+                    console.log('firing!');
+                }).success(function(data){
+                    imgPath = data;
+                }).error(function(err){
+                    console.log(err);
+                });
+            }
+        }
+
+        $scope.postItem = function(valid){
             data = {
                 "type": this.lost_found,
                 "title": this.item_name,
@@ -103,7 +129,7 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
                 "locationLat": lat,
                 "locationLon": lon,
                 "date": $scope.date,
-                "img": $scope.img,
+                "img": imgPath,
                 "author": author
             };
 

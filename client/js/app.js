@@ -1,7 +1,7 @@
 /**
  * Main angular app connected to the ng-view in index
  */
-var app = angular.module('LostAndFound',['ngRoute', 'LAFControllers', 'LAFServices', 'ngMap', '720kb.datepicker', 'ngFileUpload'
+var app = angular.module('LostAndFound',['ngRoute', 'LAFControllers', 'LAFServices', 'ngMap', 'ngFileUpload'
     , 'ngRoute', 'ngResource', 'ngAnimate', 'ui.materialize', 'wu.masonry']);
 
 app.config(['$routeProvider', function ($routeProvider) {
