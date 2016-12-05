@@ -1,5 +1,8 @@
 <div ng-include="'partials/navbar.html'"></div>
 
+<div class="section"></div>
+<div class="section"></div>
+
 <form name = "new_item" enctype="multipart/form-data" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
     <div>
         <input type = "radio" name = "lost_found" value = "Lost" ng-model = "lost_found" id="Lost"/>
