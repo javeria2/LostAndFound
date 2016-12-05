@@ -1,41 +1,81 @@
 <div ng-include="'partials/navbar.html'"></div>
+a class="btn-floating btn-large waves-effect waves-light tooltip" id="back-button" title="go back" href="#/listings"><i class="fa fa-angle-left"></i></a>
+<div class="section"></div>
+<div class="container">
+    <div class="col s12 m6" id="card-data">
+        <div class="card darken-1">
+            <div class="card-content">
+                <div class="card-title">How can MagPie help you today?</div>
+                <p>Post a lost or found item.</p>
+                <div class="row" id="event-form">
+                    <form name = "new_item" enctype="multipart/form-data" ng-controller="PostItemController as vm" ng-submit = "editItem(new_item.$valid)">
 
-<form name = "new_item" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
-    <div>
-        <input type = "radio" name = "lost_found" value = "Lost" ng-model = "item_type" id="Lost"/>
-        <label for="Lost">Lost</label>
-        <input type = "radio" name = "lost_found" value = "Found" ng-model = "item_type" id="Found"/>
-        <label for="Found">Found</label>
+                        <div class="section"></div>
+
+                        <div class="col s6">
+
+                            <!-- name -->
+                            <div class="input-field">
+                                <input type="text" name="item_name" ng-model = "item_name" id="name" required>
+                                <label for="name">What's the name of the item?</label>
+                                <p ng-show="new_item.item_name.$error.required && !new_item.item_name.$pristine" >Name is required.</p>
+                            </div>
+                            <!-- When did you find/lose it -->
+                            <div class="input-field" id="date">
+                                <p class="date-label">When did you find/lose it?</p>
+                                <input disabled type="text" class="datepicker">
+                            </div>
+
+                            <div class="section"></div>
+                            <div class="section"></div>
+                            <div class="section"></div>
+
+                            <!-- Where -->
+                            <div class="input-field">
+                                <input id="location" places-auto-complete size=80 ng-model="vm.address" component-restrictions="{country:'us'}" on-place-changed="vm.placeChanged()" />
+                                <label class="active" for="location">Where did you find/lose it?</label>
+                            </div>
+                        </div>
+
+                        <div class="col s5 offset-s1">
+                            <!-- Map -->
+                            <ng-map class="z-depth-1" scrollwheel="false" center = "40.109235624956426,-88.22725569101561"
+                                    style="border: 5px"></ng-map>
+                        </div>
+
+
+                        <div class="input-field col s12 m6" style="margin-top: 40px;">
+                            <!-- Description -->
+                            <input type="text" id="msg" ng-model="item_description">
+                            <label for="msg">Any messages to describe your item better?</label>
+                        </div>
+
+                        <!-- image -->
+                        <div class="input-field col s12 m6" style="margin-top: 40px;">
+                            <input type="text" id="img" ng-model="item_img" class="validate">
+                            <label for="img">Leave a nice image url</label>
+                        </div>
+                        <div class="center">
+                            <input type="submit" value="Edit" ng-disabled="new_item.$invalid" class="post-button">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    {{item.type}}
-    Item name<br>
-    <input type="text" name="item_name" ng-model = "item_name" placeholder="item name" required><br>
-    <p ng-show="new_item.item_name.$error.required && !new_item.item_name.$pristine" >Name is required.</p>
-    {{item.title}}
-    Item description<br>
-    <textarea name="message" ng-model = "item_description" rows="10" cols="50"></textarea><br>
-    {{item.description}}
-    Enter address of loss/found: <br/>
-    <input places-auto-complete size=80 ng-model="vm.address" component-restrictions="{country:'us'}" on-place-changed="vm.placeChanged()" /> <br/>
-    <div ng-show="vm.place">
-        Address = {{vm.place.formatted_address}} <br/>
-        Location: {{vm.place.geometry.location}}<br/>
-    </div>
-    address : {{vm.address}}
-    <ng-map scrollwheel="false" center = "40.109235624956426,-88.22725569101561"></ng-map>
-
-    Enter image url: <br>
-    <input type="text" name="item_img" ng-model = "item_img" placeholder="item image url"><br>
-
-    <input type="submit" value="Submit" ng-disabled="new_item.$invalid">
-
-</form>
+</div>
 
 
 <style type="text/css">
-  body {
-  	font-family: 'Lato';
-  	font-weight: 300;
-    background: rgb(241, 241, 241);
-  }
+    body {
+        font-family: 'Lato';
+        font-weight: 300;
+        background: rgb(241, 241, 241);
+    }
 </style>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.tooltip').tooltipster();
+    });
+</script>

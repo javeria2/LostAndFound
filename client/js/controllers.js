@@ -243,6 +243,8 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFac
         $scope.id = $routeParams.id;
 
         var vm = this;
+        var lat;
+        var lon;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
             console.log("here")
@@ -261,9 +263,12 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFac
          */
         ItemsFactory.getItemById($scope.id).then(function(item){
                 $scope.item = item['data'][0];
+                console.log($scope.item);
                 $scope.item_name = $scope.item.title;
                 $scope.item_description = $scope.item.description;
                 $scope.item_img = $scope.item.img;
+                lat = $scope.item.locationLat;
+                lon = $scope.item.locationLon;
             },
             function(error) {
                 console.log(error);
@@ -271,6 +276,7 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', 'ItemsFac
 
         $scope.editItem = function(valid){
             if(valid){
+
                 var data = {
                     "title": $scope.item_name,
                     "description": $scope.item_description,
