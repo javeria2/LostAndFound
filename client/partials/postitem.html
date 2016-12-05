@@ -1,6 +1,6 @@
 <div ng-include="'partials/navbar.html'"></div>
 
-<form name = "new_item" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
+<form name = "new_item" enctype="multipart/form-data" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
     <div>
         <input type = "radio" name = "lost_found" value = "Lost" ng-model = "lost_found" id="Lost"/>
         <label for="Lost">Lost</label>
@@ -35,7 +35,7 @@
          accept="image/*,application/pdf"
          ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div> -->
          <label class="import-file">
-            <input type="file" multiple onchange="angular.element(this).scope().fileNameChanged(this)">
+            <input type="file" multiple onchange="angular.element(this).scope().fileNameChanged(this)" name="photo">
             <div>Import file...</div>
         </label>
     Files:
@@ -43,7 +43,7 @@
         <li ng-repeat="f in files">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
     </ul>
 
-    <input type="submit" value="Submit" ng-disabled="new_item.$invalid">
+    <input type="submit" value="upload" ng-disabled="new_item.$invalid">
 
 </form>
 
