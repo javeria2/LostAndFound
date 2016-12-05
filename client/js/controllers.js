@@ -59,94 +59,46 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
         var lat;
         var lon;
         var images = "";
+
         //setting default value for radio btn
         $scope.lost_found = "Lost";
 
         var vm = this;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
-            console.log("here")
             vm.place = this.getPlace();
-            console.log('location', vm.place.geometry.location);
+
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
             vm.map.setCenter(vm.place.geometry.location);
-        }
+        };
+
         NgMap.getMap().then(function(map) {
             vm.map = map;
         });
 
-        //Uploading images
-        // $scope.$watch('files', function () {
-        //     $scope.upload($scope.files);
-        // });
-        // $scope.$watch('file', function () {
-        //     if ($scope.file != null) {
-        //         $scope.files = [$scope.file];
-        //     }
-        // });
-        // $scope.log = '';
-
-        // $scope.upload = function (files) {
-        //     if (files && files.length) {
-        //         for (var i = 0; i < files.length; i++) {
-        //             images.push(files[i]);
-        //             var file = files[i];
-        //             if (!file.$error) {
-        //                 Upload.upload({
-        //                     url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-        //                     data: {
-        //                         username: $scope.username,
-        //                         file: file
-        //                     }
-        //                 }).then(function (resp) {
-        //                     $timeout(function() {
-        //                         $scope.log = 'file: ' +
-        //                             resp.config.data.file.name +
-        //                             ', Response: ' + JSON.stringify(resp.data) +
-        //                             '\n' + $scope.log;
-        //                     });
-        //                 });
-        //             }
-        //         }
-        //     }
-        // };
-        var files;
-        $scope.fileNameChanged = function(ele) {
-            files = ele.files[0];
-        }
 
         $scope.postItem = function(valid){
-            multipartForm.post(files);
-            return;
-            ItemsFactory.saveImage(files)
-            .then(function(data){
-                if(valid){
-                    data = {
-                        "type": this.lost_found,
-                        "title": this.item_name,
-                        "description": this.item_descp,
-                        "locationLat": lat,
-                        "locationLon": lon,
-                        "date": this.date,
-                        "img": images
-                    };
-                    ItemsFactory.post(data).then(function(addedItem){
-                        alert("Item added!");
-                    }, function(error){
-                        console.log(error);
-                        return;
-                    });
 
-                }else{
-                    console.log("Error posting item!");
-                }
-            }, function(error){
-                console.log(error);
-                return;
-            });
+            data = {
+                "type": this.lost_found,
+                "title": this.item_name,
+                "description": this.item_descp,
+                "locationLat": lat,
+                "locationLon": lon,
+                "date": this.date,
+                "img": images,
+                "author": author
+            };
+
+            if (valid) {
+                ItemsFactory.post(data).then(function(addedItem){
+                    console.log("Post successful:", addedItem);
+                }, function(error){
+                    console.log(error);
+                });
+            }
         }
-
     }]
 );
 
