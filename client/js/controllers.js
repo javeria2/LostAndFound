@@ -85,6 +85,8 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
 
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
+            $scope.lat = lat;
+            $scope.lon = lon;
             vm.map.setCenter(vm.place.geometry.location);
         };
 
