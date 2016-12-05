@@ -48,8 +48,8 @@ LAFControllers.controller('navBarController', ['$scope', '$http', '$location',
  * https://github.com/danialfarid/ng-file-upload
  */
 
-LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$timeout', 'ItemsFactory', 'multipartForm',
-    function($scope, NgMap, Upload, $timeout, ItemsFactory, multipartForm) {
+LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$location', '$timeout', 'ItemsFactory', 'multipartForm',
+    function($scope, NgMap, Upload, $location, $timeout, ItemsFactory, multipartForm) {
 
         var user = JSON.parse(window.localStorage['user']);
         var id = user._id;
@@ -59,7 +59,21 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
 
         var lat;
         var lon;
-        var images = "";
+        $scope.img = "";
+
+        //initialize the datepicker
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            onSet: function(context) {
+              $scope.context = context;
+              $scope.date = new Date($scope.context.select).toISOString();
+          },
+          onStart: function() {
+            var date = new Date();
+            this.set('select', [date.getFullYear(), date.getMonth(), date.getDate()]);
+          }
+        });
 
         //setting default value for radio btn
         $scope.lost_found = "Lost";
@@ -86,14 +100,15 @@ LAFControllers.controller('PostItemController', ['$scope', 'NgMap', 'Upload', '$
                 "description": this.item_descp,
                 "locationLat": lat,
                 "locationLon": lon,
-                "date": this.date,
-                "img": images,
+                "date": $scope.date,
+                "img": $scope.img,
                 "author": author
             };
 
             if (valid) {
                 ItemsFactory.post(data).then(function(addedItem){
                     console.log("Post successful:", addedItem);
+                    $location.url('/listings');
                 }, function(error){
                     console.log(error);
                 });

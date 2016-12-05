@@ -223,3 +223,48 @@ body {
 .event-img {
   background: linear-gradient(transparent, black);
   width: 100%; }
+
+/*============*/
+/* ITEM FORM */
+/*============*/
+#back-button {
+  background: #89bdd3 !important;
+  position: fixed;
+  top: 120px;
+  left: 30px; }
+
+#card-data {
+  margin: 100px; }
+  #card-data .card-content {
+    padding: 50px !important; }
+    #card-data .card-content #event-form {
+      margin-top: 30px; }
+  #card-data .card-title {
+    font-size: 2.3rem !important;
+    font-family: 'Lato';
+    color: #89bdd3; }
+    #card-data .card-title + p {
+      font-size: 1.5rem !important;
+      margin-top: 10px;
+      font-family: 'Lato'; }
+  #card-data .date-label {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #9e9e9e; }
+
+.post-button {
+  margin-top: 30px;
+  padding: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border: #89bdd3 1px solid;
+  border-radius: 40px;
+  background: none;
+  cursor: pointer !important;
+  color: #89bdd3;
+  transition: all 0.3s;
+  font-size: 1.2rem; }
+  .post-button:hover {
+    background: #89bdd3;
+    color: #fff;
+    font-weight: 300; }
