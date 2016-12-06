@@ -58,13 +58,22 @@
 <div class="section"></div>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal">
+<div id="modal" class="modal" style="height: 100%;">
     <div class="modal-content">
-        <h4>{{modalInfo.title}}</h4>
-        <p>{{modalInfo.description}}</p>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="center">
+          <img ng-src="{{modalInfo.img}}" class="circle responsive-img" style="max-width: 20%;">
+          <h4>{{modalInfo.title}}</h4>
+          <p>{{modalInfo.description}}</p>
+        </div>
     </div>
     <div class="modal-footer">
-        <a href="#/details/{{modalInfo._id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Details</a>
+        <div class="center" style="margin-bottom: 20px;">
+          <a href="#/details/{{modalInfo._id}}" class=" modal-action modal-close custom-button custom-button-border">Details</a>
+        </div>
     </div>
 </div>
 

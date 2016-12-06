@@ -27,15 +27,12 @@
     <label for="Descending">Descending</label>
 </form>
 
-<form name="orderingBy_radio">
-    <input type = "radio" name = "lost_found" value ="postDate" ng-model = "propertyName" id="postDate"/>
-    <label for="postDate">postDate</label>
-    <input type = "radio" name = "lost_found" value="date" ng-model = "propertyName" id="date"/>
-    <label for="date">date</label>
-    <input type = "radio" name = "lost_found" value="title" ng-model = "propertyName" id="title"/>
-    <label for="title">title</label>
-</form>
-<!------------------>
+<select ng-model = "propertyName">
+    <option value="" disabled selected>Choose your option</option>
+    <option value="postDate">PostDate</option>
+    <option value="date">Date</option>
+    <option value="title">Title</option>
+</select>
 
 <div class="container event-grid">
   <div masonry style="text-align: center; max-width: 740px;margin: 0 auto;">
@@ -84,6 +81,7 @@
       columnWidth: 160,
       gutter: 20
     });
+    $('select').material_select();
   });
 
 </script>

@@ -120,7 +120,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                         file: file
                     }
                 }).progress(function(evt){
-                    console.log('firing!');
+                    $scope.imgTitle = file.$ngfName;
                 }).success(function(data){
                     imgPath = data;
                 }).error(function(err){
@@ -144,7 +144,6 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
 
             if (valid) {
                 ItemsFactory.post(data).then(function(addedItem){
-                    console.log("Post successful:", addedItem);
                     $location.url('/listings');
                 }, function(error){
                     console.log(error);
@@ -264,7 +263,6 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
                 .success(function(data){
                     $scope.address = data.results[0].formatted_address;
                     $scope.address = $scope.address.substring(0, $scope.address.length - 10);
-                    console.log($scope.address);
                 });
                 return CommentsFactory.getCommentByItem($scope.item._id);
             }).then(function(comments) {
@@ -279,7 +277,6 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
          */
         $scope.deleteItem = function() {
             ItemsFactory.delete($scope.id).then(function(item){
-                    console.log("Deleted: ", item);
                     $location.path( "/listings" );
                 },
                 function(error) {
@@ -335,9 +332,7 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
         var lon;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
-            console.log("here");
             vm.place = this.getPlace();
-            console.log('location', vm.place.geometry.location);
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
             vm.map.setCenter(vm.place.geometry.location);
@@ -350,27 +345,55 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
         /**
          * Get lost items
          */
-        ItemsFactory.getItemById($scope.id).then(function(item){
-                $scope.item = item['data'][0];
-                // $scope.item_name = $scope.item.title;
-                // $scope.item_description = $scope.item.description;
-                // $scope.item_img = $scope.item.img;
-                // lat = $scope.item.locationLat;
-                // lon = $scope.item.locationLon;
-            },
-            function(error) {
-                console.log(error);
-            });
+        
+        //image upload logic
+        $scope.$watch(function(){
+            return $scope.file
+        }, function(){
+            $scope.upload($scope.file);
+        });
+
+        var imgPath;
+        $scope.upload = function(file) {
+            if(file) {
+                Upload.upload({
+                    url: '/api/saveImage',
+                    method: 'POST',
+                    data: {
+                        file: file
+                    }
+                }).progress(function(evt){
+                    $scope.imgTitle = file.$ngfName;
+                }).success(function(data){
+                    imgPath = data;
+                }).error(function(err){
+                    console.log(err);
+                });
+            }
+        }
+        
         $scope.obj = {};
+
+        //fetch the item
+        ItemsFactory.getItemById($scope.id).then(function(item){
+            $scope.item = item['data'][0];
+            $scope.obj.item_name = item['data'][0]['title'];
+            $scope.obj.item_description = item['data'][0]['description'];
+            imgPath = $scope.item['data'][0]['img'];
+        },
+        function(error) {
+            console.log(error);
+        });
+
+        //edit item
         $scope.editItem = function(valid){
             if(valid){
                 $scope.item['title'] = $scope.obj.item_name;
                 $scope.item['description'] = $scope.obj.item_description;
                 $scope.item['locationLat'] = lat;
                 $scope.item['locationLon'] = lon;
-                $scope.item['img'] = $scope.obj.item_img;
+                $scope.item['img'] = imgPath;
                 ItemsFactory.put($scope.item).then(function(updatedUser){
-                   console.log("user updated!");
                    $location.url('/listings');
                 });
             }else{

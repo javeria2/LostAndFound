@@ -10,7 +10,8 @@ var CommentSchema = new mongoose.Schema({
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Item'
-        }
+        },
+        title: String
     },
     author: {
         id: {
