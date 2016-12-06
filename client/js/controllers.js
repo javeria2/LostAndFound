@@ -305,7 +305,6 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
 
             if (valid) {
                 CommentsFactory.postComment(data).then(function(addedComment){
-                    console.log("Post successful:", addedComment);
                     return CommentsFactory.getCommentByItem($scope.item._id);
                 }).then(function(comments) {
                     $scope.comments = comments['data'];

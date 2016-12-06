@@ -18,9 +18,7 @@ var UserSchema = new mongoose.Schema({
 	username: String,
 	password: String,
 	about: String,
-	img: String,
-	followers: [{id: String}],
-	following: [{id: String}]
+	img: String
 });
 
 UserSchema.plugin(passportLocalMongoose);
