@@ -34,15 +34,14 @@
 	<ul class="side-nav" id = "mobile-nav">
 
 		<!--MOBILE NAV HEADER-->
-		<li class = "#e0f7fa cyan lighten-5" style="height: 150px; ">
-				<div class="col s6">
-					<img ng-src="{{profileImg}}" data-pin-nopin="true" class="circle" style="max-width: 40%; margin-top: 20px; margin-left: 20px; float:left;">
+		<li class = "#e0f7fa cyan lighten-5" style="height: 200px; ">
+				<div>
+					<img ng-src="{{profileImg}}" data-pin-nopin="true" class="circle" style="max-width: 40%; margin-top: 20px;">
 				</div>
-				<div class="col s6 center">
-					<p style="float: right; margin-top: 60px;"><a href="#/profile/{{profileId}}" class="author">{{profileName}}</a></p>
+				<div>
+					<p><a style="font-size: 25px;" href="#/profile/{{profileId}}" class="author">{{profileName}}</a></p>
 				</div>
 		</li>
-
 		<li>
 			<span><a id="search"  href="#/search"><i class="icon-search"></i> Search for an item...</a></span>
 		</li>
