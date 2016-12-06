@@ -344,36 +344,65 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
  */
 LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
     function($scope, ItemsFactory) {
+
         if(window.localStorage['user']) var user = JSON.parse(window.localStorage['user']);
 
-        var lostItems = [], foundItems = [];
-        /**
-         * Get lost items
-         */
-        ItemsFactory.getLost().then(function(data){
-                lostItems = data['data'];
-                $scope.lostItems = lostItems;
-            },
-            function(error) {
-                console.log(error);
-            });
+        var preloadLostItems = [];
+        var preloadFoundItems = [];
+
+        $scope.page = 1;
+        $scope.reverse = true;
+        $scope.propertyName = "postDate";
 
         /**
-         * Get found items
+         * Initial loading and preloading of data
          */
-        ItemsFactory.getFound().then(function(data){                
-                foundItems = data['data'];
-            },
-            function(error) {
-                console.log(error);
-            });
+        ItemsFactory.getItemsByPage($scope.page, "Lost").then(function(items) {
+            $scope.lostItems = items['data'];
+            preloadLostItems = items['data'];
+            $scope.type = "Lost";
+        }, function(error) {
+            console.log("Getting found items failed: ", error);
+        });
 
+        ItemsFactory.getItemsByPage($scope.page, "Found").then(function(items) {
+            preloadFoundItems = items['data'];
+        }, function(error) {
+            console.log("Getting found items failed: ", error);
+        });
+
+        /**
+         * Controls the logic for changing tabs. To increase speed, tabs are preloaded before hand
+         */
         $scope.changeToFound = function() {
-            $scope.lostItems = foundItems;
-        }
+
+            // Setting the preloaded lost items
+            $scope.lostItems = preloadFoundItems;
+            $scope.type = "Found";
+
+            //preloading first page of lost items in background
+            $scope.page = 1;
+            ItemsFactory.getItemsByPage($scope.page, "Lost").then(function(items) {
+                preloadLostItems = items['data'];
+            }, function(error) {
+                console.log("Getting found items failed: ", error);
+            });
+        };
+
         $scope.changeToLost = function() {
-            $scope.lostItems = lostItems;
-        }
+
+            // Setting the preloaded lost items
+            $scope.lostItems = preloadLostItems;
+            $scope.type = "Lost";
+
+            // Preloading first page of found items in background
+            $scope.page = 1;
+            ItemsFactory.getItemsByPage($scope.page, "Found").then(function(items) {
+                preloadFoundItems = items['data'];
+            }, function(error) {
+                console.log("Getting found items failed: ", error);
+            });
+        };
     }]
 );
 

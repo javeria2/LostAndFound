@@ -15,10 +15,32 @@
   </div>
 </div>
 
+<!--Mamo's changes-->
+<div>
+    <input type="text" ng-model="search.title" placeholder="Enter item name...">
+</div>
+
+<form name="ordering_radio">
+    <input type = "radio" name = "lost_found" ng-value =true ng-model = "reverse" id="Ascending"/>
+    <label for="Ascending">Ascending</label>
+    <input type = "radio" name = "lost_found" ng-value=false ng-model = "reverse" id="Descending"/>
+    <label for="Descending">Descending</label>
+</form>
+
+
+<form name="orderingBy_radio">
+    <input type = "radio" name = "lost_found" value ="postDate" ng-model = "propertyName" id="postDate"/>
+    <label for="postDate">postDate</label>
+    <input type = "radio" name = "lost_found" value="date" ng-model = "propertyName" id="date"/>
+    <label for="date">date</label>
+    <input type = "radio" name = "lost_found" value="title" ng-model = "propertyName" id="title"/>
+    <label for="title">title</label>
+</form>
+<!------------------>
 
 <div class="container event-grid">
   <div masonry style="text-align: center; max-width: 740px;margin: 0 auto;">
-    <div class="masonry-brick" ng-repeat="lost in lostItems" style="margin: 0 auto;">
+    <div class="masonry-brick" ng-repeat="lost in lostItems | filter:search | orderBy:propertyName:reverse" style="margin: 0 auto;">
       <div class="grid-item" style="margin: 10px">
         <div class="card" style="max-width: 350px;">
           <div class="card-image waves-effect waves-block waves-light">

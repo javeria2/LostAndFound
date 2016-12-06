@@ -23,6 +23,30 @@ LAFServices.factory('ItemsFactory', function($http, $window, $q, $location) {
                     return $q.reject(response.data);
                 });
         },
+        getItemsByPage: function(pageNum, type) {
+
+            var baseUrl = '/api';
+
+            // variable to calculate which page to load based on page number
+            var skip = pageNum * 10 - 10;
+
+            // variable to check if to filter by all, pending or completed
+            var filtering = '&where={type:' + "\"" + type + "\"" + '}';
+
+            // make the actual call
+            return $http.get(baseUrl+'/items?skip='+skip+'&limit=10'+filtering)
+                .then(function(response) {
+                    if (typeof response.data === 'object') {
+                        return response.data;
+                    } else {
+                        // invalid response
+                        return $q.reject(response.data);
+                    }
+                }, function(response) {
+                    // something went wrong
+                    return $q.reject(response.data);
+                });
+        },
         getFound : function() {
             return $http.get(baseUrl+'/items?where={"type": "Found"}')
                 .then(function(response) {
