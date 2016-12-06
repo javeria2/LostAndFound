@@ -302,7 +302,7 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
         $scope.postComment = function(valid){
             data = {
                 "message": $scope.message,
-                "item": { "id": $scope.item._id},
+                "item": { "id": $scope.item._id, "title": $scope.item.title},
                 "author": author
             };
 
@@ -454,8 +454,8 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
  * Controller for the profile page
  * ========================================
  */
-LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory',
-    function($scope, $routeParams, ItemsFactory, UsersFactory) {
+LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory', 'CommentsFactory',
+    function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
         //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
@@ -463,6 +463,9 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             return ItemsFactory.getByUserId($routeParams.id);
         }).then(function(items) {
             $scope.items = items['data'];
+            return CommentsFactory.getCommentByUser($scope.user._id);
+        }).then(function(comments) {
+            $scope.comments = comments['data'];
         }, function(error) {
             console.log("Profile page error:", error);
         });

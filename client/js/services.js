@@ -224,6 +224,20 @@ LAFServices.factory('CommentsFactory', function($http, $window, $q) {
                     return $q.reject(response.data);
                 });
         },
+        getCommentByUser: function (id) {
+            return $http.get(baseUrl+'/comments?where={"author.id": \"' + id + '\"}')
+                .then(function (response) {
+                    if (typeof response.data === 'object') {
+                        return response.data;
+                    } else {
+                        // invalid response
+                        return $q.reject(response.data);
+                    }
+                }, function (response) {
+                    // something went wrong
+                    return $q.reject(response.data);
+                });
+        },
         postComment: function(data) {
             return $http.post(baseUrl+'/comments', data)
                 .then(function(response) {

@@ -16,6 +16,14 @@
     <a href="#/details/{{item._id}}">Details</a>
 </div>
 
+<hr>
+<h2>Comments</h2>
+<div ng-repeat="comment in comments">
+    <hr>
+    <p>Commented: {{comment.message}}</p>
+    <p>On: <a href="#/details/{{comment.item.id}}">{{comment.item.title}}</a></p>
+</div>
+
 <div ng-include="'partials/footer.html'"></div>
 
 <style type="text/css">

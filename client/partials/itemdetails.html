@@ -103,15 +103,6 @@
 
 <!--====================Commenting Section==================-->
 
-<!--Showing comments-->
-<div ng-repeat="comment in comments">
-    <hr>
-    <img src="{{comment.author.img}}">
-    <p>{{comment.author.username}}</p>
-    <p><a href="#/profile/{{comment.author.id}}">Profile</a></p>
-    <p>{{comment.message}}</p>
-</div>
-
 <!--Posting comment-->
 <form name = "new_comment" ng-submit = "postComment(new_comment.$valid)">
 
@@ -125,6 +116,15 @@
         <input type="submit" value="Post" ng-disabled="new_comment.$invalid" class="post-button">
     </div>
 </form>
+
+<!--Showing comments-->
+<div ng-repeat="comment in comments">
+    <hr>
+    <img src="{{comment.author.img}}">
+    <p>{{comment.author.username}}</p>
+    <p><a href="#/profile/{{comment.author.id}}">Profile</a></p>
+    <p>{{comment.message}}</p>
+</div>
 
 <div ng-include="'partials/footer.html'"></div>
 
