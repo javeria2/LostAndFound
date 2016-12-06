@@ -28,7 +28,7 @@ LAFServices.factory('ItemsFactory', function($http, $window, $q, $location) {
             var baseUrl = '/api';
 
             // variable to calculate which page to load based on page number
-            var skip = pageNum * 10 - 10;
+            var skip = pageNum * 50 - 50;
 
             // variable to check if to filter by all, pending or completed
             var filtering = '&where={type:' + "\"" + type + "\"" + '}';
@@ -202,6 +202,50 @@ LAFServices.factory('UsersFactory', function($http, $window, $q, $location) {
     }
 });
 
+/**
+ * ========================================
+ * Factory for comment endpoint
+ * ========================================
+ */
+LAFServices.factory('CommentsFactory', function($http, $window, $q) {
+    var baseUrl = '/api';
+    return {
+        getCommentByItem: function (id) {
+            return $http.get(baseUrl+'/comments?where={"item.id": \"' + id + '\"}')
+                .then(function (response) {
+                    if (typeof response.data === 'object') {
+                        return response.data;
+                    } else {
+                        // invalid response
+                        return $q.reject(response.data);
+                    }
+                }, function (response) {
+                    // something went wrong
+                    return $q.reject(response.data);
+                });
+        },
+        postComment: function(data) {
+            return $http.post(baseUrl+'/comments', data)
+                .then(function(response) {
+                    if (typeof response.data === 'object') {
+                        return response.data;
+                    } else {
+                        // invalid response
+                        return $q.reject(response.data);
+                    }
+                }, function(response) {
+                    // something went wrong
+                    return $q.reject(response.data);
+                });
+        }
+    }
+});
+
+/**
+ * ========================================
+ * Service for multipart form
+ * ========================================
+ */
 LAFServices.service('multipartForm', ['$http', function($http){
     this.post = function(data){
         console.log(data);

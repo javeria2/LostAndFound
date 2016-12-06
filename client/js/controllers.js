@@ -110,7 +110,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
             $scope.upload($scope.file);
         });
 
-        var imgPath;
+        var imgPath = "../uploads/default.jpg";
         $scope.upload = function(file) {
             if(file) {
                 Upload.upload({
@@ -127,7 +127,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                     console.log(err);
                 });
             }
-        }
+        };
 
         //post item
         $scope.postItem = function(valid){
@@ -234,8 +234,8 @@ function deg2rad(deg) {
  * Controller for the item details page
  * ========================================
  */
-LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$timeout', '$location', 'ItemsFactory',
-    function($scope, $http, $routeParams, $timeout, $location, ItemsFactory) {
+LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$timeout', '$location', 'ItemsFactory', 'CommentsFactory',
+    function($scope, $http, $routeParams, $timeout, $location, ItemsFactory, CommentsFactory) {
 
         //init getters and setters
         $scope.id = $routeParams.id;
@@ -266,6 +266,9 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
                     $scope.address = $scope.address.substring(0, $scope.address.length - 10);
                     console.log($scope.address);
                 });
+                return CommentsFactory.getCommentByItem($scope.item._id);
+            }).then(function(comments) {
+                $scope.comments = comments['data'];
             },
             function(error) {
                 console.log(error);
@@ -283,6 +286,37 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
                     console.log(error);
                 });
         };
+
+        /**
+         * --------------------
+         * commenting logic
+         * --------------------
+         */
+        //getters and setters
+        var user = JSON.parse(window.localStorage['user']);
+        var id = user._id;
+        var username = user.username;
+        var user_img = user.img;
+        var author = { "id": id, "username": username, "img": user_img };
+
+        $scope.postComment = function(valid){
+            data = {
+                "message": $scope.message,
+                "item": { "id": $scope.item._id},
+                "author": author
+            };
+
+            if (valid) {
+                CommentsFactory.postComment(data).then(function(addedComment){
+                    console.log("Post successful:", addedComment);
+                    return CommentsFactory.getCommentByItem($scope.item._id);
+                }).then(function(comments) {
+                    $scope.comments = comments['data'];
+                }, function(error){
+                    console.log(error);
+                });
+            }
+        }
     }]
 );
 
@@ -301,13 +335,14 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
         var lon;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
-            console.log("here")
+            console.log("here");
             vm.place = this.getPlace();
             console.log('location', vm.place.geometry.location);
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
             vm.map.setCenter(vm.place.geometry.location);
-        }
+        };
+
         NgMap.getMap().then(function(map) {
             vm.map = map;
         });

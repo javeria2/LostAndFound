@@ -101,6 +101,31 @@
 <div class="section"></div>
 <div class="section"></div>
 
+<!--====================Commenting Section==================-->
+
+<!--Showing comments-->
+<div ng-repeat="comment in comments">
+    <hr>
+    <img src="{{comment.author.img}}">
+    <p>{{comment.author.username}}</p>
+    <p><a href="#/profile/{{comment.author.id}}">Profile</a></p>
+    <p>{{comment.message}}</p>
+</div>
+
+<!--Posting comment-->
+<form name = "new_comment" ng-submit = "postComment(new_comment.$valid)">
+
+    <div class="input-field col s12 m6" style="margin-top: 35px;">
+        <!-- Description -->
+        <input type="text" id="msg" ng-model="message">
+        <label for="msg">Message</label>
+    </div>
+
+    <div class="center">
+        <input type="submit" value="Post" ng-disabled="new_comment.$invalid" class="post-button">
+    </div>
+</form>
+
 <div ng-include="'partials/footer.html'"></div>
 
 <style type="text/css">

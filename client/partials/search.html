@@ -19,8 +19,8 @@
             </shape>
 
             <custom-marker ng-repeat="item in found_items | filter:search"
-                    ng-click="showModal(item)"
-                    position="{{item.locationLat}},{{item.locationLon}}">
+                           ng-click="showModal(item)"
+                           position="{{item.locationLat}},{{item.locationLon}}">
                 <div>
                     <a ng-click="showModal(item)" href='#modal' modal>{{item.title}}</a>
                 </div>

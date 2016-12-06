@@ -1,10 +1,13 @@
-var Items = require('../models/items');
+/**
+ * Created by mamoruohara on 12/5/16.
+ */
+var Comments = require('../models/comments');
 
 module.exports = function(router) {
 
-    var itemsRouter = router.route('/items');
+    var commentsRouter = router.route('/comments');
 
-    itemsRouter.get(function(req, res) {
+    commentsRouter.get(function(req, res) {
 
         var where   = "where"   in req.query ? eval("("+req.query.where+")") : null;
         var sort    = "sort"    in req.query ? eval("("+req.query.sort+")") : null;
@@ -13,13 +16,13 @@ module.exports = function(router) {
         var limit   = "limit"   in req.query ? parseInt(req.query.limit) : 0;
         var count   = "count"   in req.query ? req.query.count : false;
 
-        Items
+        Comments
             .find(where)
             .sort(sort)
             .select(select)
             .skip(skip)
             .limit(limit)
-            .exec(function (err, items) {
+            .exec(function (err, comments) {
                 if (err) {
                     if (err.name === "MongoError") {
                         res.status(500).send({ message: "Mongo error, check query string", data: []});
@@ -29,12 +32,12 @@ module.exports = function(router) {
                     return console.error(err);
                 }
                 (count === "true") ?
-                    res.json({ message: "OK", data: items.length}) :
-                    res.json({ message: "OK", data: items});
+                    res.json({ message: "OK", data: comments.length}) :
+                    res.json({ message: "OK", data: comments});
             });
     }).post(function(req, res) {
-        var postItem = new Items(req.body);
-        postItem.save(function (err, newItem) {
+        var postItem = new Comments(req.body);
+        postItem.save(function (err, newComment) {
             if (err) { // catch any errors
                 if (err.name === 'ValidationError') {
                     console.error(err);
@@ -43,7 +46,7 @@ module.exports = function(router) {
                     res.status(500).send({ message: "Wooooahhhhh baaad", data: [] })
                 }
             } else {
-                res.status(201).json({ message: "Item successfully added!", data: newItem});
+                res.status(201).json({ message: "Comment successfully added!", data: newComment});
             }
         });
     }).options(function(req, res){
