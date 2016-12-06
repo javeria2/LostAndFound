@@ -110,7 +110,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
             $scope.upload($scope.file);
         });
 
-        var imgPath;
+        var imgPath = "../uploads/default.jpg";
         $scope.upload = function(file) {
             if(file) {
                 Upload.upload({
@@ -127,11 +127,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                     console.log(err);
                 });
             }
-        }
-
-        $scope.getImgTitle = function() {
-
-        }
+        };
 
         //post item
         $scope.postItem = function(valid){
@@ -162,8 +158,8 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
  * Controller for the search page
  * ========================================
  */
-LAFControllers.controller('SearchController', ['$scope', 'NgMap', 'ItemsFactory',
-    function($scope, NgMap, ItemsFactory) {
+LAFControllers.controller('SearchController', ['$scope', '$timeout', 'NgMap', 'ItemsFactory',
+    function($scope, $timeout, NgMap, ItemsFactory) {
 
         //map logic
         NgMap.getMap().then(function(map) {
@@ -237,13 +233,21 @@ function deg2rad(deg) {
  * Controller for the item details page
  * ========================================
  */
-LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$location', 'ItemsFactory',
-    function($scope, $http, $routeParams, $location, ItemsFactory) {
+LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$timeout', '$location', 'ItemsFactory', 'CommentsFactory',
+    function($scope, $http, $routeParams, $timeout, $location, ItemsFactory, CommentsFactory) {
 
         //init getters and setters
         $scope.id = $routeParams.id;
         $scope.user = JSON.parse(window.localStorage['user']);
 
+        /**
+         * timeout for maps lazy load
+         */
+        $scope.pauseLoading=true;
+        $timeout(function() {
+            console.debug("Showing the map. The google maps api should load now.");
+            $scope.pauseLoading=false;
+        }, 3000);
 
         /**
          * Get lost items
@@ -260,6 +264,9 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$l
                     $scope.address = data.results[0].formatted_address;
                     $scope.address = $scope.address.substring(0, $scope.address.length - 10);
                 });
+                return CommentsFactory.getCommentByItem($scope.item._id);
+            }).then(function(comments) {
+                $scope.comments = comments['data'];
             },
             function(error) {
                 console.log(error);
@@ -276,6 +283,37 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$l
                     console.log(error);
                 });
         };
+
+        /**
+         * --------------------
+         * commenting logic
+         * --------------------
+         */
+        //getters and setters
+        var user = JSON.parse(window.localStorage['user']);
+        var id = user._id;
+        var username = user.username;
+        var user_img = user.img;
+        var author = { "id": id, "username": username, "img": user_img };
+
+        $scope.postComment = function(valid){
+            data = {
+                "message": $scope.message,
+                "item": { "id": $scope.item._id, "title": $scope.item.title},
+                "author": author
+            };
+
+            if (valid) {
+                CommentsFactory.postComment(data).then(function(addedComment){
+                    console.log("Post successful:", addedComment);
+                    return CommentsFactory.getCommentByItem($scope.item._id);
+                }).then(function(comments) {
+                    $scope.comments = comments['data'];
+                }, function(error){
+                    console.log(error);
+                });
+            }
+        }
     }]
 );
 
@@ -298,7 +336,8 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
             vm.map.setCenter(vm.place.geometry.location);
-        }
+        };
+
         NgMap.getMap().then(function(map) {
             vm.map = map;
         });
@@ -306,25 +345,54 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
         /**
          * Get lost items
          */
-        ItemsFactory.getItemById($scope.id).then(function(item){
-                $scope.item = item['data'][0];
-                // $scope.item_name = $scope.item.title;
-                // $scope.item_description = $scope.item.description;
-                // $scope.item_img = $scope.item.img;
-                // lat = $scope.item.locationLat;
-                // lon = $scope.item.locationLon;
-            },
-            function(error) {
-                console.log(error);
-            });
+        
+        //image upload logic
+        $scope.$watch(function(){
+            return $scope.file
+        }, function(){
+            $scope.upload($scope.file);
+        });
+
+        var imgPath;
+        $scope.upload = function(file) {
+            if(file) {
+                Upload.upload({
+                    url: '/api/saveImage',
+                    method: 'POST',
+                    data: {
+                        file: file
+                    }
+                }).progress(function(evt){
+                    $scope.imgTitle = file.$ngfName;
+                }).success(function(data){
+                    imgPath = data;
+                }).error(function(err){
+                    console.log(err);
+                });
+            }
+        }
+        
         $scope.obj = {};
+
+        //fetch the item
+        ItemsFactory.getItemById($scope.id).then(function(item){
+            $scope.item = item['data'][0];
+            $scope.obj.item_name = item['data'][0]['title'];
+            $scope.obj.item_description = item['data'][0]['description'];
+            imgPath = $scope.item['data'][0]['img'];
+        },
+        function(error) {
+            console.log(error);
+        });
+
+        //edit item
         $scope.editItem = function(valid){
             if(valid){
                 $scope.item['title'] = $scope.obj.item_name;
                 $scope.item['description'] = $scope.obj.item_description;
                 $scope.item['locationLat'] = lat;
                 $scope.item['locationLon'] = lon;
-                $scope.item['img'] = $scope.obj.item_img;
+                $scope.item['img'] = imgPath;
                 ItemsFactory.put($scope.item).then(function(updatedUser){
                    $location.url('/listings');
                 });
@@ -409,8 +477,8 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
  * Controller for the profile page
  * ========================================
  */
-LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory',
-    function($scope, $routeParams, ItemsFactory, UsersFactory) {
+LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory', 'CommentsFactory',
+    function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
         //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
@@ -418,6 +486,9 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             return ItemsFactory.getByUserId($routeParams.id);
         }).then(function(items) {
             $scope.items = items['data'];
+            return CommentsFactory.getCommentByUser($scope.user._id);
+        }).then(function(comments) {
+            $scope.comments = comments['data'];
         }, function(error) {
             console.log("Profile page error:", error);
         });

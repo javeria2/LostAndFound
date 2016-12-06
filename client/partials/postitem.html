@@ -49,7 +49,6 @@
                             </ng-map>
                         </div>
 
-
                         <div class="input-field col s12 m6" style="margin-top: 35px;">
                             <!-- Description -->
                             <input type="text" id="msg" ng-model="item_descp">
@@ -59,9 +58,8 @@
                         <!-- image upload -->
                         <div class="input-field col s12 m6" style="margin-top: 20px;">
                             <div class="file-field input-field">
-                              <div class="btn" ng-change="getImgTitle()"
-                              ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-    ngf-accept="'image/*'" ngf-resize="{width: 800, height: 800}">
+                              <div class="btn" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" 
+                                ngf-accept="'image/*'" ngf-resize="{width: 800, height: 800}">
                                 <span><i class="fa fa-cloud-upload" style="font-size: 2rem;"></i></span>
                                 <input type="file" multiple>
                               </div>

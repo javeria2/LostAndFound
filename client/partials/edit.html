@@ -46,11 +46,20 @@ a class="btn-floating btn-large waves-effect waves-light tooltip" id="back-butto
                             placeholder="Any messages to describe your item better?">
                         </div>
 
-                        <!-- image -->
-                        <div class="input-field col s12 m6" style="margin-top: 40px;">
-                            <input type="text" id="img" ng-model="obj.item_img" ng-value = "item.img" class="validate"
-                            placeholder="Leave a nice image url">
+                        <!-- image upload -->
+                        <div class="input-field col s12 m6" style="margin-top: 20px;">
+                            <div class="file-field input-field">
+                              <div class="btn" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" 
+                                ngf-accept="'image/*'" ngf-resize="{width: 800, height: 800}">
+                                <span><i class="fa fa-cloud-upload" style="font-size: 2rem;"></i></span>
+                                <input type="file" multiple>
+                              </div>
+                              <div class="file-path-wrapper">
+                                <input value="{{imgTitle}}" class="file-path validate" type="text" placeholder="Upload a nice picture describing your item...">
+                              </div>
+                            </div>
                         </div>
+
                         <div class="center">
                             <input type="submit" value="Edit" ng-disabled="new_item.$invalid" class="post-button">
                         </div>
