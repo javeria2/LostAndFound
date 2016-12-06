@@ -120,13 +120,17 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                         file: file
                     }
                 }).progress(function(evt){
-                    console.log('firing!');
+                    $scope.imgTitle = file.$ngfName;
                 }).success(function(data){
                     imgPath = data;
                 }).error(function(err){
                     console.log(err);
                 });
             }
+        }
+
+        $scope.getImgTitle = function() {
+
         }
 
         //post item
@@ -144,7 +148,6 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
 
             if (valid) {
                 ItemsFactory.post(data).then(function(addedItem){
-                    console.log("Post successful:", addedItem);
                     $location.url('/listings');
                 }, function(error){
                     console.log(error);
@@ -256,7 +259,6 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$l
                 .success(function(data){
                     $scope.address = data.results[0].formatted_address;
                     $scope.address = $scope.address.substring(0, $scope.address.length - 10);
-                    console.log($scope.address);
                 });
             },
             function(error) {
@@ -268,7 +270,6 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$l
          */
         $scope.deleteItem = function() {
             ItemsFactory.delete($scope.id).then(function(item){
-                    console.log("Deleted: ", item);
                     $location.path( "/listings" );
                 },
                 function(error) {
@@ -293,9 +294,7 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
         var lon;
         vm.types = "['establishment']";
         vm.placeChanged = function() {
-            console.log("here")
             vm.place = this.getPlace();
-            console.log('location', vm.place.geometry.location);
             lat = vm.place.geometry.location.lat();
             lon = vm.place.geometry.location.lng();
             vm.map.setCenter(vm.place.geometry.location);
@@ -327,7 +326,6 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
                 $scope.item['locationLon'] = lon;
                 $scope.item['img'] = $scope.obj.item_img;
                 ItemsFactory.put($scope.item).then(function(updatedUser){
-                   console.log("user updated!");
                    $location.url('/listings');
                 });
             }else{
