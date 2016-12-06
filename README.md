@@ -40,4 +40,26 @@
 }
 ```
 
+##Comments Schema
+```javascript
+{
+    message: { type: String, required: true },
+    postDate: { type: Date, default: Date.now },
+    item:   {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Item'
+        }
+    },
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        username: String,
+        img: String
+    }
+}
+```
+
 ###Lets get this done bois
