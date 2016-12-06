@@ -7,10 +7,10 @@
 
 <div class="container">
 	<div class="card" style="overflow: hidden;">
-		<div class="row" style='margin: 0;'>
+		<div class="row flex-s" style='margin: 0;'>
 
 			<!-- MAP -->
-			<div class="col s6" style="padding: 0;">
+			<div class="col s12 m6 box-a" style="padding: 0;">
 				<ng-map center="{{item.locationLat}},{{item.locationLon}}"
 	        	zoom="14"
 	        	class="z-depth-1"
@@ -21,7 +21,7 @@
 			</div>
 
 			<!-- DETAILS -->
-			<div class="col s6" style="padding:0;">
+			<div class="col s12 m6 box-b" style="padding:0;">
 				<div class="row">
 					<!-- OWNER -->
 					<div class="col s12" id="profile-bg">
@@ -87,5 +87,14 @@
   	font-family: 'Lato';
   	font-weight: 300;
     background: rgb(241, 241, 241);
+  }
+  @media (max-width: 768px) {
+	.flex-s {
+		display: flex;
+		flex-direction: column; /* Stack on top */
+	}
+	.box-a {
+		order: 2; /* Go down, bring Box B up */
+	}
   }
 </style>
