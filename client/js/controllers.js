@@ -128,11 +128,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                 });
             }
         }
-
-        $scope.getImgTitle = function() {
-
-        }
-
+        
         //post item
         $scope.postItem = function(valid){
             data = {
