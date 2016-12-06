@@ -2,32 +2,33 @@
 <div class="section"></div>
 <div class="section"></div>
 <div class="row">
-  <div class="col s12 m8" style="padding: 0 !important;">
-    <ng-map zoom="16"
-            class="z-depth-1"
-            scrollwheel="false"
-            center="current-location"
-            id="custom-map">
+    <div class="col s12 m8" style="padding: 0 !important;">
+        <ng-map zoom="16"
+                class="z-depth-1"
+                scrollwheel="false"
+                center="current-location"
+                id="custom-map">
 
-        <shape name="circle"
-               stroke-color='#89bdd3'
-               stroke-opacity="1"
-               stroke-weight="3"
-               center="current-location"
-               radius="100"
-               editable="true">
-        </shape>
+            <shape name="circle"
+                   stroke-color='#89bdd3'
+                   stroke-opacity="1"
+                   stroke-weight="3"
+                   center="current-location"
+                   radius="100"
+                   editable="true">
+            </shape>
 
-        <custom-marker ng-repeat="item in found_items | filter:search"
-                ng-click="showModal(item)"
-                position="{{item.locationLat}},{{item.locationLon}}">
-            <div>
-                <a ng-click="showModal(item)" href='#modal' modal>{{item.title}}</a>
-            </div>
-        </custom-marker>
+            <custom-marker ng-repeat="item in found_items | filter:search"
+                    ng-click="showModal(item)"
+                    position="{{item.locationLat}},{{item.locationLon}}">
+                <div>
+                    <a ng-click="showModal(item)" href='#modal' modal>{{item.title}}</a>
+                </div>
+            </custom-marker>
 
-    </ng-map>
-  </div>
+        </ng-map>
+    </div>
+
   <div class="col s12 m4" style="padding: 0 !important;">
     <div class="card-panel center" id="search-details" style="margin: 0 !important;">    
         <div class="section"></div>

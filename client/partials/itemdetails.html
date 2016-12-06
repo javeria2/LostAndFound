@@ -8,16 +8,39 @@
 <div class="container">
 	<div class="card" style="overflow: hidden;">
 		<div class="row" style='margin: 0;'>
+			<div class="col s6" style="padding: 0;  background-color: #E4E4DF;  z-index: 999; position: relative; height: 850px;">
+				<!-- MAP -->
+				<div ng-if="pauseLoading" style="padding-top: 70%;">
+					<div class="center">
+						<div class=" preloader-wrapper big active">
+							<div class="spinner-layer spinner-blue">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-			<!-- MAP -->
-			<div class="col s6" style="padding: 0;">
-				<ng-map center="{{item.locationLat}},{{item.locationLon}}"
-	        	zoom="14"
-	        	class="z-depth-1"
-	        	scrollwheel="false" style="height: 850px; z-index: 999; position: relative;">
+				<div ng-if="!pauseLoading">
+					<div map-lazy-load="https://maps.google.com/maps/api/js"
+						 map-lazy-load-params="https://maps.google.com/maps/api/js">
 
-	    			<marker position="{{item.locationLat}},{{item.locationLon}}"></marker>
-				</ng-map>
+						<ng-map center="{{item.locationLat}},{{item.locationLon}}"
+								zoom="14"
+								class="z-depth-1"
+								scrollwheel="false" style="height: 850px;">
+
+							<marker position="{{item.locationLat}},{{item.locationLon}}"></marker>
+						</ng-map>
+					</div>
+				</div>
 			</div>
 
 			<!-- DETAILS -->
@@ -71,8 +94,6 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 </div>

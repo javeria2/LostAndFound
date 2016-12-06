@@ -159,8 +159,8 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
  * Controller for the search page
  * ========================================
  */
-LAFControllers.controller('SearchController', ['$scope', 'NgMap', 'ItemsFactory',
-    function($scope, NgMap, ItemsFactory) {
+LAFControllers.controller('SearchController', ['$scope', '$timeout', 'NgMap', 'ItemsFactory',
+    function($scope, $timeout, NgMap, ItemsFactory) {
 
         //map logic
         NgMap.getMap().then(function(map) {
@@ -234,13 +234,21 @@ function deg2rad(deg) {
  * Controller for the item details page
  * ========================================
  */
-LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$location', 'ItemsFactory',
-    function($scope, $http, $routeParams, $location, ItemsFactory) {
+LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$timeout', '$location', 'ItemsFactory',
+    function($scope, $http, $routeParams, $timeout, $location, ItemsFactory) {
 
         //init getters and setters
         $scope.id = $routeParams.id;
         $scope.user = JSON.parse(window.localStorage['user']);
 
+        /**
+         * timeout for maps lazy load
+         */
+        $scope.pauseLoading=true;
+        $timeout(function() {
+            console.debug("Showing the map. The google maps api should load now.");
+            $scope.pauseLoading=false;
+        }, 3000);
 
         /**
          * Get lost items
