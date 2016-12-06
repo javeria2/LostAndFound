@@ -1,29 +1,59 @@
-<div ng-controller="navBarController" class="navbar z-depth-1"> 
+<div ng-controller="navBarController" class="navbar z-depth-1">
 	<div class="cust-container">
-		<a href="#/listings"><span class="title">Mag<span class="suffix">pie</span></span></a>
-		<span><a id="search" class="custom-button custom-button-border" href="#/search"><i class="icon-search"></i> Search for an item...</a></span>
-		<ul class="buttons">
-		    <li class="loginBt">
-		    	<a class="custom-button custom-button-border" href="#/auth" style="margin: 0; padding: 8px; font-weight: 400;">
-		    		<i class="icon-person"></i> {{buttonText}}
-		    	</a>
-		    </li>
-		    <li>
-  					<div class="ui comments feedback">
-					  <div class="comment">
-					    <a class="avatar">
-					      <img src="{{profileImg}}" data-pin-nopin="true" style="border-radius: 100%;">
-					    </a>
-					    <div class="content">
-					      <a href="#/profile/{{profileId}}" class="author">{{profileName}}</a>
-					      <div class="text" style="text-align: left;">
-        					<a ng-click="logout()">Logout</a>
-      					  </div>
-					    </div>
-					  </div>
-					</div>
-		    </li>
-		</ul>
+			<a href="#/listings"><span class="title">Mag<span class="suffix">pie</span></span></a>
+			<a href="#!" data-activates="mobile-nav" id = "mobile-home-btn" class="left button-collapse"><i class="medium material-icons">menu</i></a>
+			<span class = "hide-on-small-and-down">
+				<span><a id="search" class="custom-button custom-button-border" href="#/search"><i class="icon-search"></i> Search for an item...</a></span>
+				<ul class="buttons">
+					<li class="loginBt">
+						<a class="custom-button custom-button-border" href="#/auth" style="margin: 0; padding: 8px; font-weight: 400;">
+							<i class="icon-person"></i> {{buttonText}}
+						</a>
+					</li>
+					<li>
+						<div class="ui comments feedback">
+							<div class="comment">
+								<a class="avatar">
+									<img src="{{profileImg}}" data-pin-nopin="true" style="border-radius: 100%;">
+								</a>
+								<div class="content">
+									<a href="#/profile/{{profileId}}" class="author">{{profileName}}</a>
+									<div class="text" style="text-align: left;">
+										<a ng-click="logout()">Logout</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</span>
+
+
 		<div class="clearfix"></div>
 	</div>
+	<ul class="side-nav" id = "mobile-nav">
+
+		<!--MOBILE NAV HEADER-->
+		<li class = "#e0f7fa cyan lighten-5" style="height: 150px; ">
+				<div class="col s6">
+					<img ng-src="{{profileImg}}" data-pin-nopin="true" class="circle" style="max-width: 40%; margin-top: 20px; margin-left: 20px; float:left;">
+				</div>
+				<div class="col s6">
+					<p style="float: right; margin-top: 60px;"><a href="#/profile/{{profileId}}" class="author">{{profileName}}</a></p>
+				</div>
+		</li>
+
+		<li>
+			<span><a id="search"  href="#/search"><i class="icon-search"></i> Search for an item...</a></span>
+		</li>
+		<li><a style = "cursor: pointer;" ng-click="logout()">Logout</a></li>
+	</ul>
 </div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".button-collapse").sideNav();
+    });
+</script>

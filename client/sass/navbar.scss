@@ -12,6 +12,15 @@
 			font-size: 2.2rem;
 			letter-spacing: 1.5px;
 		}
+		#mobile-home-btn{
+			@media only screen and (min-width: 600px){
+				display:none;
+			}
+		}
+		.material-icons{
+			font-size: 40px;
+			margin-left: 20px;
+		}
 		#search{
 			float:left;
 			margin: 0;

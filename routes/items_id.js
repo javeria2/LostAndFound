@@ -21,6 +21,8 @@ module.exports = function(router) {
         });
     }).put(function(req, res) {
         // var postTask = new Tasks(req.body);
+        console.log(req.params.id);
+        console.log(req.body);
         Items.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedItem) {
             if (err) { // catch any errors
                 if (err.name === 'ValidationError') {
