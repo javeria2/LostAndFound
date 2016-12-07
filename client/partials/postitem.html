@@ -8,7 +8,7 @@
                 <div class="card-title">How can MagPie help you today?</div>
                 <p>Post a lost or found item.</p>
                 <div class="row" id="event-form">
-                    <form name = "new_item" enctype="multipart/form-data" ng-controller="PostItemController as vm" ng-submit = "postItem(new_item.$valid)">
+                    <form novalidate name = "new_item" enctype="multipart/form-data" ng-controller="PostItemController as vm" ng-submit = "postItem()">
 
                         <!-- Lost/Found type -->
                         <div class="center">
@@ -26,7 +26,7 @@
                             <div class="input-field">
                                 <input type="text" name="item_name" ng-model = "item_name" id="name" required>
                                 <label for="name">What's the name of the item?</label>
-                                <p ng-show="new_item.item_name.$error.required && !new_item.item_name.$pristine" >Name is required.</p>
+                                <!--<p id = "name-error" ng-show="new_item.item_name.$error.required && (new_item.item_name.$dirty || submitted)" >Name is required.</p>-->
                             </div>
                             <!-- When did you find/lose it -->
                             <div class="input-field" id="date">
@@ -69,9 +69,21 @@
                             </div>
                         </div>
                         <div class="center">
-                            <input type="submit" value="Post" ng-disabled="new_item.$invalid" class="post-button">
+                            <input id = "submit-btn" type="submit" value="Post" class="post-button">
                         </div>
                     </form>
+                    <div class="section"></div>
+                    <div class="row error">
+                        <div class="col l4 m2 s2"></div>
+                        <div class="col l4 m10 s10">
+                            <div class="card-panel red darken-1" style="padding: 20px;">
+                              <span class="white-text center">
+                                <p style="font-size: 1rem;"><i class="fa fa-times-circle-o"></i> {{displayText}}</p>
+                              </span>
+                            </div>
+                        </div>
+                        <div class="col l4 m2 s2"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,5 +101,6 @@
 <script type="text/javascript">
      $(document).ready(function() {
         $('.tooltip').tooltipster();
+
     });
 </script>
