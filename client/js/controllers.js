@@ -507,12 +507,12 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
     function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
         //current user
-        var currentUser = JSON.parse(window.localStorage['user']);
+        var user = JSON.parse(window.localStorage['user']);
 
         //fetch current user
-        UsersFactory.getUserById($routeParams.id).then(function(user) {
-            $scope.user = user['data'];
-            if ($scope.user._id === currentUser._id) {
+        UsersFactory.getUserById($routeParams.id).then(function(_user) {
+            $scope.user = _user['data'];
+            if ($scope.user._id === user._id) {
                 $('#chat-bubble').hide();
             }
             return ItemsFactory.getByUserId($routeParams.id);
