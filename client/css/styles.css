@@ -322,12 +322,12 @@ input.select-dropdown {
   .item_info #desc {
     color: #616161; }
 
-div#commentTitle {
+.cust-comments div#commentTitle {
   color: #89bdd3;
   font-family: 'Lato';
   margin: 30px;
   padding-top: 30px; }
 
-.comment {
+.cust-comments .comment {
   font-size: 1.35rem;
   margin-bottom: 30px !important; }

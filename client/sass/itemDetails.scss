@@ -43,13 +43,16 @@
 		color: #616161;
 	}
 }
-div#commentTitle {
-	color: $base-color;
-	font-family: 'Lato';
-	margin: 30px;
-	padding-top: 30px;
-}
-.comment {
-	font-size: 1.35rem;
-	margin-bottom: 30px !important;
+
+.cust-comments{
+	div#commentTitle {
+		color: $base-color;
+		font-family: 'Lato';
+		margin: 30px;
+		padding-top: 30px;
+	}
+	.comment {
+		font-size: 1.35rem;
+		margin-bottom: 30px !important;
+	}
 }
