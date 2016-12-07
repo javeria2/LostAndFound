@@ -19,7 +19,15 @@
 
                 <!-- BIO -->
                 <div class="col s12 bio">
-                    <p class="name">{{user.username}}</p>
+                    <div class="row">
+                        <div class="col s4"></div>
+                        <div class="col s4">
+                            <span class="name">{{user.username}}</span> 
+                            <!-- CHAT BUBBLE -->
+                            <a ng-click="openChat()" class="btn-floating btn-large waves-effect waves-light red" style="margin-bottom: 20px;"><i class="material-icons fa fa-comments"></i></a>
+                        </div>
+                        <div class="col s4"></div>
+                    </div>
                     <div class="row">
                         <div class="col s4"></div>
                         <div class="col s4"><blockquote>{{user.about}}</blockquote></div>
@@ -56,6 +64,22 @@
     <p>Commented: {{comment.message}}</p>
     <p>On: <a href="#/details/{{comment.item.id}}">{{comment.item.title}}</a></p>
 </div>
+
+  <!-- chat window -->
+  <div class="chat-box">
+    <div class="chat-head">
+        <span class="username">{{user.username}}</span>
+        <div class="close">x</div>
+    </div>
+    <div class="chat-body-wrap">
+        <div class="chat-body">
+            <div class="add-msg"></div>
+        </div>
+        <div class="chat-footer">
+            <textarea class="msg-input" placeholder="Type a message..."></textarea>
+        </div>
+    </div>
+  </div>
 
 <div ng-include="'partials/footer.html'"></div>
 

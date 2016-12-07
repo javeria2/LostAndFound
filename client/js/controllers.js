@@ -508,6 +508,32 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
         }, function(error) {
             console.log("Profile page error:", error);
         });
+
+
+        /**
+         * CHAT FUNCTIONALITIES
+         */
+        // var socket = io.connect();
+        //keep the chat box closed initially
+        $('.chat-box').hide();
+
+        //open the chat modal on clicking chat button
+        $scope.openChat = function () {
+            $('.chat-box').show();
+        }
+
+        //close the chat box on clicking the close button
+        $('.close').on('click', function(event){
+            $('.chat-box').hide();
+        });
+
+        //when we click on the header of the chat box, 
+        //make it smoothly slide down
+        $('.chat-head').on('click', function(event){
+            $('.chat-body-wrap').slideToggle('slow');
+        });
+
+        
     }]
 );
 

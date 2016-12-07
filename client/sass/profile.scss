@@ -13,7 +13,7 @@
 	}
 	.bio {
 		text-align: center;
-		margin-top: 130px;
+		margin-top: 110px;
 		.name {
 			font-size: 4rem;
 			font-weight: 700;
@@ -22,3 +22,113 @@
 		}
 	}
 }
+
+
+/**
+ * CHAT BOX STYLING
+ */
+.chat-box {
+	z-index: 2000;
+	position: fixed;
+	bottom: -9px;
+	right: 140px;
+	background: #fff;
+	width: 320px;
+	border-radius: 5px 5px 0 0;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	.chat-head {
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+		background: #4597ba;
+		padding: 8px;
+		color: #fff;
+		font-size: 1.2rem;
+		border-radius: 5px 5px 0 0;
+		&:before{
+			content: '';
+			height: 10px;
+			width: 10px;
+			background: #1abc9c;
+			position: absolute;
+			top: 18px;
+			border-radius: 100%;
+		}
+		.username {
+			margin-left: 15px;
+			cursor: pointer;
+		}
+		.close {
+			cursor: pointer;
+			float: right;
+			margin-right: 5px;
+		}
+	}
+	.chat-body {		
+		height: 350px;
+		font-size: 1.2rem;
+		overflow: auto;
+		overflow-x: hidden;
+		.msg-a{
+			img {
+				border-radius: 100% !important;
+			}
+			padding: 10px;
+			background: #ffd699;
+			min-height: 50px;
+			margin-left: 12px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			margin-right: 60px;
+			border-radius: 5px;
+			position: relative;
+			&:before {
+				content: '';
+				position: absolute;
+				left: -20px;
+				top: 22px;
+				width: 0px;
+				height: 0px;
+				border: 10px solid;
+				border-color: transparent #ffe0b2 transparent transparent;
+			}
+		}
+		.msg-b{
+			img {
+				border-radius: 100% !important;
+			}
+			min-height: 50px;
+			padding: 10px;
+			background: #c5d1d3;
+			margin-right: 12px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			margin-left: 60px;
+			border-radius: 5px;
+			position: relative;
+			&:before {
+				content: '';
+				position: absolute;
+				right: -20px;
+				top: 22px;
+				width: 0px;
+				height: 0px;
+				border: 10px solid;
+				border-color: transparent transparent transparent #ecf0f1;
+			}
+		}
+	}
+	.chat-footer {
+		.msg-input {
+			padding: 5px;
+			box-sizing: border-box;
+			border: none;
+			border-top: 1px solid #bdc3c7;
+			resize: none;
+			font-size: 1rem;
+			height: 60px;
+			&:focus{
+				outline: none;
+			}
+		}
+	}
+}
+
