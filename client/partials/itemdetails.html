@@ -9,7 +9,7 @@
 	<div class="card" style="overflow: hidden;">
 
 		<div class="row flex-s" style='margin: 0;'>
-			<div class="col s12 m6 box-a" style="padding: 0;  background-color: #E4E4DF;  z-index: 999; position: relative; height: 850px;">
+			<div class="col s12 m6 box-a" style="padding: 0;  background-color: #E4E4DF;  z-index: 999; position: relative; height: 971px;">
 				<!-- MAP -->
 				<div ng-if="pauseLoading" style="padding-top: 70%;">
 					<div class="center">
@@ -42,7 +42,7 @@
 						<ng-map center="{{item.locationLat}},{{item.locationLon}}"
 								zoom="14"
 								class="z-depth-1"
-								scrollwheel="false" style="height: 850px;">
+								scrollwheel="false" style="height: 971px;">
 
 							<marker position="{{item.locationLat}},{{item.locationLon}}"></marker>
 						</ng-map>
@@ -100,11 +100,29 @@
 							</table>
 						</div>
 					</div>
+
+					<div class="col s12">
+						<div class="center">
+							<div style="margin-top: 10px; margin-left: 10px; font-size: 1.5rem;">Images: </div>
+							<div class="ui tiny images" style="margin-top: 20px;">
+  								<a href="#modal1" modal><img class="ui image" src="{{item.img}}"></a>
+  							</div>
+  						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+  <!-- Image Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+    	<div class="center">
+    		<img ng-src="{{item.img}}">
+    	</div>
+    </div>
+  </div>
 
 <div class="section"></div>
 <div class="section"></div>
@@ -168,3 +186,8 @@
 	}
   }
 </style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.modal').modal();
+	});
+</script>

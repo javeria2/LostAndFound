@@ -30,7 +30,7 @@
                     </div>
                     <div class="row">
                         <div class="col s4"></div>
-                        <div class="col s4"><blockquote>{{user.about}}</blockquote></div>
+                        <div class="col s4"><blockquote style="margin-top: 0;">{{user.about}}</blockquote></div>
                         <div class="col s4"></div>
                     </div>
                 </div>
@@ -105,21 +105,22 @@
 </div>
 
 <div class="section"></div>
-  <!-- chat window -->
-  <div class="chat-box">
-    <div class="chat-head">
-        <span class="username">{{user.username}}</span>
-        <div class="close">x</div>
+
+<!-- chat window -->
+<div class="chat-box">
+<div class="chat-head">
+    <span class="username">{{user.username}}</span>
+    <div class="close">x</div>
+</div>
+<div class="chat-body-wrap">
+    <div class="chat-body">
+        <div class="add-msg"></div>
     </div>
-    <div class="chat-body-wrap">
-        <div class="chat-body">
-            <div class="add-msg"></div>
-        </div>
-        <div class="chat-footer">
-            <textarea class="msg-input" placeholder="Type a message..."></textarea>
-        </div>
+    <div class="chat-footer">
+        <textarea class="msg-input" placeholder="Type a message..."></textarea>
     </div>
-  </div>
+</div>
+</div>
 
 <div ng-include="'partials/footer.html'"></div>
 
