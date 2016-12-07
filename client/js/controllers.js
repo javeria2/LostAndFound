@@ -472,6 +472,15 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
                 console.log("Getting found items failed: ", error);
             });
         };
+
+        //show sorting options
+        $('.show-options').hide();
+        $('#show-sort').on('click', function(){
+            $(this).text(function(i, text){
+                return text === "Show sorting options" ? "Hide sorting options" : "Show sorting options";
+            });
+            $('.show-options').slideToggle();
+        });
     }]
 );
 
