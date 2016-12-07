@@ -506,11 +506,14 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
     function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
         //current user
-        var user = JSON.parse(window.localStorage['user']);
+        var currentUser = JSON.parse(window.localStorage['user']);
 
         //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
             $scope.user = user['data'];
+            if ($scope.user._id === currentUser._id) {
+                $('#chat-bubble').hide();
+            }
             return ItemsFactory.getByUserId($routeParams.id);
         }).then(function(items) {
             $scope.items = items['data'];
@@ -628,10 +631,10 @@ LAFControllers.controller('authController', ['$scope', '$http','$location', 'AVA
                 username: $scope.username,
                 password: $scope.password
             };
-            
+
             ItemsFactory.login(user).then(function(user) {
                 window.localStorage['user'] = angular.toJson(user);
-                $location.url('/listings');
+                $location.url('/profile/' + user._id);
             }, function(error) {
                 console.log("Login error", error);
             });
@@ -645,7 +648,7 @@ LAFControllers.controller('authController', ['$scope', '$http','$location', 'AVA
 
             ItemsFactory.signup(user).then(function(user) {
                 window.localStorage['user'] = angular.toJson(user);
-                $location.url('/listings');
+                $location.url('/profile/' + user._id);
             }, function(error) {
                 console.log("Signup error", error);
             });
