@@ -625,10 +625,10 @@ LAFControllers.controller('authController', ['$scope', '$http','$location', 'AVA
                 username: $scope.username,
                 password: $scope.password
             };
-            
+
             ItemsFactory.login(user).then(function(user) {
                 window.localStorage['user'] = angular.toJson(user);
-                $location.url('/listings');
+                $location.url('/profile/' + user._id);
             }, function(error) {
                 console.log("Login error", error);
             });
@@ -642,7 +642,7 @@ LAFControllers.controller('authController', ['$scope', '$http','$location', 'AVA
 
             ItemsFactory.signup(user).then(function(user) {
                 window.localStorage['user'] = angular.toJson(user);
-                $location.url('/listings');
+                $location.url('/profile/' + user._id);
             }, function(error) {
                 console.log("Signup error", error);
             });
