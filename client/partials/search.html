@@ -6,14 +6,14 @@
         <ng-map zoom="16"
                 class="z-depth-1"
                 scrollwheel="false"
-                center="current-location"
+                center="{{lat}},{{lon}}"
                 id="custom-map">
 
             <shape name="circle"
                    stroke-color='#89bdd3'
                    stroke-opacity="1"
                    stroke-weight="3"
-                   center="current-location"
+                   center="{{lat}},{{lon}}"
                    radius="100"
                    editable="true">
             </shape>

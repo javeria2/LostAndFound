@@ -161,6 +161,16 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
 LAFControllers.controller('SearchController', ['$scope', '$timeout', 'NgMap', 'ItemsFactory',
     function($scope, $timeout, NgMap, ItemsFactory) {
 
+        /**
+         * Geting the current position of the user
+         * @param position call back function
+         */
+        var getStops = function(position) {
+            $scope.lat = position.coords.latitude;
+            $scope.lon = position.coords.longitude;
+        };
+        navigator.geolocation.getCurrentPosition(getStops);
+
         //map logic
         NgMap.getMap().then(function(map) {
             $scope.map = map;
