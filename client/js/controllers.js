@@ -296,6 +296,8 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
         var user_img = user.img;
         var author = { "id": id, "username": username, "img": user_img };
 
+        $scope.label = "Write a nice message!";
+
         $scope.postComment = function(valid, form){
             console.log("FORM",form);
             data = {
