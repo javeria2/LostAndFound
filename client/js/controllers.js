@@ -296,7 +296,8 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
         var user_img = user.img;
         var author = { "id": id, "username": username, "img": user_img };
 
-        $scope.postComment = function(valid){
+        $scope.postComment = function(valid, form){
+            console.log("FORM",form);
             data = {
                 "message": $scope.message,
                 "item": { "id": $scope.item._id, "title": $scope.item.title},
@@ -305,6 +306,7 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
 
             if (valid) {
                 CommentsFactory.postComment(data).then(function(addedComment){
+                    $scope.message = null;
                     return CommentsFactory.getCommentByItem($scope.item._id);
                 }).then(function(comments) {
                     $scope.comments = comments['data'];
