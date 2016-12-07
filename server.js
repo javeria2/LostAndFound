@@ -1,21 +1,23 @@
 // Get the packages we need
-var express        = require('express'),
-    router         = express.Router(),
-    bodyParser     = require('body-parser'),
-    mongoose       = require('mongoose'),
-    secrets        = require('./config/secrets'),
-    passport       = require('passport'),
-    LocalStrategy  = require('passport-local'),
-    cookieParser   = require('cookie-parser'),
-    multipart      = require('connect-multiparty'),
+var express             = require('express'),
+    app                 = express(),
+    router              = express.Router(),
+    bodyParser          = require('body-parser'),
+    mongoose            = require('mongoose'),
+    secrets             = require('./config/secrets'),
+    passport            = require('passport'),
+    LocalStrategy       = require('passport-local'),
+    cookieParser        = require('cookie-parser'),
+    multipart           = require('connect-multiparty'),
+    server              = require('http').createServer(app),
     multipartMiddleware = multipart();
 
 var authRoutes     = require('./routes/auth'),
     User           = require('./models/user'),
     saveImage      = require('./routes/saveImage');
 
-// Create our Express application
-var app = express();
+//include chat sockets
+var chat           = require('./routes/chat').listen(server);
 
 // Use environment defined port or 3000
 var port = process.env.PORT || 8080;
@@ -65,7 +67,8 @@ app.use('/api', authRoutes);
 app.use('/api', saveImage);
 
 
-// Start the server
-app.listen(port);
-console.log('Server running on port ' + port);
+//start up the server
+server.listen(port, function(){
+    console.log('listening on port:', port);
+});
 
