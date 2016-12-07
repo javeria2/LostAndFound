@@ -34,7 +34,7 @@
 	<ul class="side-nav" id = "mobile-nav">
 
 		<!--MOBILE NAV HEADER-->
-		<li class = "#e0f7fa cyan lighten-5" style="height: 200px; ">
+		<li id = "profile" class = "#e0f7fa cyan lighten-5" style="height: 200px; ">
 				<div>
 					<img ng-src="{{profileImg}}" data-pin-nopin="true" class="circle" style="max-width: 40%; margin-top: 20px;">
 				</div>
@@ -45,7 +45,7 @@
 		<li>
 			<span><a id="search"  href="#/search"><i class="icon-search"></i> Search for an item...</a></span>
 		</li>
-		<li><a style = "cursor: pointer;" ng-click="logout()">Logout</a></li>
+		<li><a id = "logout" style = "cursor: pointer;" ng-click="logout()">Logout</a></li>
 	</ul>
 </div>
 
@@ -53,6 +53,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $(".button-collapse").sideNav();
+        $(".button-collapse").sideNav({
+            closeOnClick: true
+		});
     });
 </script>
