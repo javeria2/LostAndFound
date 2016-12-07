@@ -550,13 +550,12 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
                     img: user.img
                 }); 
                 $(this).val('');
-                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
             }
         });
 
         socket.on('msg-new', function(data){
             //sender
-            // if(data.sender === user.username){
+            if(data.sender === user.username){
                 $('<div class="msg-a"><div class="ui comments">\
                         <div class="comment">\
                             <a class="avatar">\
@@ -568,20 +567,24 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
                             </div>\
                         </div>\
                     </div></div>').insertBefore('.add-msg');
-            // } else { 
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+
+            } else { 
                 //receiver
-                // $('<div class="msg-b"><div class="ui comments">\
-                //         <div class="comment">\
-                //             <a class="avatar">\
-                //               <img src="' + data.img + '">\
-                //             </a>\
-                //             <div class="content">\
-                //                 <a class="author">' + data.sender + '</a>\
-                //                 <div class="text">' + data.message + '</div>\
-                //             </div>\
-                //         </div>\
-                //     </div></div>').insertBefore('.add-msg');
-            // }
+                $('<div class="msg-b"><div class="ui comments">\
+                        <div class="comment">\
+                            <a class="avatar">\
+                              <img src="' + data.img + '">\
+                            </a>\
+                            <div class="content">\
+                                <a class="author">' + data.sender + '</a>\
+                                <div class="text">' + data.message + '</div>\
+                            </div>\
+                        </div>\
+                    </div></div>').insertBefore('.add-msg');
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+
+            }
         });
 
         /************************/

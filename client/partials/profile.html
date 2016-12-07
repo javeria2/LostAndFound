@@ -24,7 +24,7 @@
                         <div class="col s6">
                             <span class="name">{{user.username}}</span> 
                             <!-- CHAT BUBBLE -->
-                            <a ng-click="openChat()" class="btn-floating btn-large waves-effect waves-light red" style="margin-bottom: 20px;"><i class="material-icons fa fa-comments"></i></a>
+                            <a ng-click="openChat()" class="btn-floating btn-large waves-effect waves-light red tooltip" title="chat" style="margin-bottom: 20px; cursor: pointer;"><i class="material-icons fa fa-comments"></i></a>
                         </div>
                         <div class="col s3"></div>
                     </div>
@@ -48,23 +48,63 @@
     </div>
 </div>
 
-
-<div ng-repeat="item in items | filter:filter">
-    <hr>
-    <p>Type: {{item.type}}</p>
-    <p>Title: {{item.title}}</p>
-    <p>Desc: {{item.description}}</p>
-    <a href="#/details/{{item._id}}">Details</a>
+<!-- LOST AND FOUND ITEMS BRICKS -->
+<div class="container event-grid" style="transition: all 0.3s;">
+  <div masonry style="text-align: center; max-width: 740px;margin: 0 auto;">
+    <div class="masonry-brick" ng-repeat="lost in items | filter:filter" style="margin: 0 auto;">
+      <div class="grid-item" style="margin: 10px">
+        <div class="card" style="max-width: 350px;">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="{{lost.img}}" style="max-height: 300px;">
+          </div>
+          <div class="card-content">
+            <span class="card-title">{{lost.title}}</span><br>
+          </div>
+          <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4" style="font-weight: 300; font-size: 1.8rem; text-transform: uppercase;">{{lost.title}}<i class="material-icons right">close</i></span>
+              <p class="card-action">{{lost.description}}</p>
+              <div class="card-title activator red-text text-darken-3">Posted on {{lost.postDate | date:'EEEE, MMMM d'}}, {{lost.postDate | date:'shortTime'}}</div>
+              <div class="section"></div>
+              <a class="waves-effect waves-light btn-large" href="#/details/{{lost._id}}">Find more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<hr>
-
-<div ng-repeat="comment in comments">
-    <hr>
-    <p>Commented: {{comment.message}}</p>
-    <p>On: <a href="#/details/{{comment.item.id}}">{{comment.item.title}}</a></p>
+<!-- COMMENTS -->
+<div class="container cust-comments" id="test4">
+    <div class="card z-depth-1">
+        <div class="container">
+            <div class="section"></div>
+            <div ng-repeat="comment in comments">
+                <div class="ui comments">
+                    <div class="comment">
+                        <a class="avatar">
+                          <img ng-src={{comment.author.img}} style="border-radius: 100%;">
+                        </a>
+                        <div class="content">
+                          <a class="author" href="#/profile/{{comment.author.id}}">{{comment.author.username}}</a>
+                          <div class="metadata" style='font-size: 1rem;'>
+                            <span class="date">{{comment.postDate | date:'EEEE, MMMM d'}} {{comment.postDate | date:'shortTime'}}</span>
+                          </div>
+                          <div class="text">
+                            {{comment.message}}
+                          </div>
+                          <div class="actions">
+                            Posted on: <a href="#/details/{{comment.item.id}}">{{comment.item.title}}</a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section"></div>
+    </div>
 </div>
 
+<div class="section"></div>
   <!-- chat window -->
   <div class="chat-box">
     <div class="chat-head">
