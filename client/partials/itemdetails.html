@@ -111,8 +111,8 @@
 
     <div class="input-field col s12 m6" style="margin-top: 35px;">
         <!-- Description -->
-        <input type="text" id="msg" ng-model="message">
-        <label for="msg">Message</label>
+		<textarea id="textarea1" class="materialize-textarea" ng-model = "message" length="120"></textarea>
+		<label for="textarea1">Comment</label>
     </div>
 
     <div class="center">
@@ -147,3 +147,8 @@
 	}
   }
 </style>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input#input_text, textarea#textarea1').characterCounter();
+    });
+</script>
