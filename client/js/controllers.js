@@ -67,6 +67,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
         var lat;
         var lon;
         $scope.img = "";
+        $('.error').hide();
 
         //initialize the datepicker and set and fetch values
         $('.datepicker').pickadate({
@@ -129,9 +130,14 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
             }
         };
 
-        //post item
-        $scope.postItem = function(valid){
 
+        $scope.displayText = "Item name is required!";
+
+        $scope.postItem = function(){
+            if(!this.item_name) {
+                $('.error').show();
+                return;
+            }
             data = {
                 "type": this.lost_found,
                 "title": this.item_name,
@@ -143,13 +149,11 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                 "author": author
             };
 
-            if (valid) {
-                ItemsFactory.post(data).then(function(addedItem){
-                    $location.url('/listings');
-                }, function(error){
-                    console.log(error);
-                });
-            }
+            ItemsFactory.post(data).then(function(addedItem){
+                $location.url('/listings');
+            }, function(error){
+                console.log(error);
+            });
         }
     }]
 );
@@ -241,6 +245,7 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
         $scope.id = $routeParams.id;
         $scope.user = JSON.parse(window.localStorage['user']);
 
+
         /**
          * timeout for maps lazy load
          */
@@ -301,6 +306,8 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
         var username = user.username;
         var user_img = user.img;
         var author = { "id": id, "username": username, "img": user_img };
+
+        $scope.label = "Write a nice message!";
 
         $scope.postComment = function(valid, form){
             console.log("FORM",form);
@@ -393,19 +400,21 @@ LAFControllers.controller('EditController', ['$scope', '$routeParams', '$locatio
         });
 
         //edit item
-        $scope.editItem = function(valid){
-            if(valid){
-                $scope.item['title'] = $scope.obj.item_name;
-                $scope.item['description'] = $scope.obj.item_description;
-                $scope.item['locationLat'] = lat;
-                $scope.item['locationLon'] = lon;
-                $scope.item['img'] = imgPath;
-                ItemsFactory.put($scope.item).then(function(updatedUser){
-                   $location.url('/listings');
-                });
-            }else{
-                console.log("edit failed!");
+        $scope.displayText = "Item name is required!";
+
+        $scope.editItem = function(){
+            if(!this.obj.item_name) {
+                $('.error').show();
+                return;
             }
+            $scope.item['title'] = $scope.obj.item_name;
+            $scope.item['description'] = $scope.obj.item_description;
+            $scope.item['locationLat'] = lat;
+            $scope.item['locationLon'] = lon;
+            $scope.item['img'] = imgPath;
+            ItemsFactory.put($scope.item).then(function(updatedUser){
+               $location.url('/listings');
+            });
         }
     }]
 );
@@ -509,7 +518,6 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             console.log("Profile page error:", error);
         });
 
-
         /**
          * CHAT FUNCTIONALITIES
          */
@@ -533,7 +541,11 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             $('.chat-body-wrap').slideToggle('slow');
         });
 
-        
+    
+        $scope.filter = { type: "Found" };
+        $scope.changeTab = function(type) {
+            $scope.filter = type;
+        }
     }]
 );
 
