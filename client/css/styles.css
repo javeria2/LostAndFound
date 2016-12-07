@@ -231,6 +231,13 @@ body {
   /* vertical gutter */
   margin-bottom: 10px; }
 
+ul.dropdown-content.select-dropdown li span {
+  color: #89bdd3;
+  /* no need for !important :) */ }
+
+input.select-dropdown {
+  margin-bottom: 0 !important; }
+
 /*============*/
 /* ITEM FORM */
 /*============*/
