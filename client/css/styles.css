@@ -321,3 +321,13 @@ input.select-dropdown {
     color: #424242; }
   .item_info #desc {
     color: #616161; }
+
+div#commentTitle {
+  color: #89bdd3;
+  font-family: 'Lato';
+  margin: 30px;
+  padding-top: 30px; }
+
+.comment {
+  font-size: 1.35rem;
+  margin-bottom: 30px !important; }
