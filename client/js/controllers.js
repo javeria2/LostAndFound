@@ -261,8 +261,13 @@ LAFControllers.controller('ItemDetails', ['$scope', '$http', '$routeParams', '$t
                 }
                 $http.get("http://maps.googleapis.com/maps/api/geocode/json?latlng="+ $scope.item.locationLat + ","+$scope.item.locationLon+"&sensor=true")
                 .success(function(data){
-                    $scope.address = data.results[0].formatted_address;
-                    $scope.address = $scope.address.substring(0, $scope.address.length - 10);
+                    if(data.results[0] == null){
+                        $scope.address = "address not given";
+                    }else{
+                        $scope.address = data.results[0].formatted_address;
+                        $scope.address = $scope.address.substring(0, $scope.address.length - 10);
+                    }
+
                 });
                 return CommentsFactory.getCommentByItem($scope.item._id);
             }).then(function(comments) {
