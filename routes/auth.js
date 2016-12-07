@@ -30,9 +30,9 @@ router.post('/login', function(req, res){
     			console.log(err);
     			return;
     		}
-    		req.session.save(() => {
+    		req.session.save(function() {
     			res.json(user);
-    		});    		
+    		});
     	});
     })(req, res);
 });
