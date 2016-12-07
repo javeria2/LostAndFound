@@ -544,7 +544,7 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
         $('.msg-input').keypress(function(event) {
             if(event.keyCode == 13) {
                 var msg = $(this).val();
-                socket.emit('send message', {
+                socket.emit('msg-send', {
                     sender: user.username, 
                     message: msg, 
                     img: user.img
@@ -554,7 +554,7 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             }
         });
 
-        socket.on('new message', function(data){
+        socket.on('msg-new', function(data){
             //sender
             if(data.sender === user.username){
                 $('<div class="msg-a"><div class="ui comments">\
