@@ -124,6 +124,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
                     $scope.imgTitle = file.$ngfName;
                 }).success(function(data){
                     imgPath = data;
+                    console.log(imgPath);
                 }).error(function(err){
                     console.log(err);
                 });
