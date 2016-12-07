@@ -510,6 +510,11 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
         }, function(error) {
             console.log("Profile page error:", error);
         });
+
+        $scope.filter = { type: "Found" };
+        $scope.changeTab = function(type) {
+            $scope.filter = type;
+        }
     }]
 );
 
