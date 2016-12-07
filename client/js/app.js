@@ -75,7 +75,9 @@ app.constant('AVATARS', {
 
 function checkLoggedIn($http, $location, $q) {
     var deferred = $q.defer();
-    var user = JSON.parse(window.localStorage['user']);
+
+    if(window.localStorage['user']) var user = JSON.parse(window.localStorage['user']);
+    
     if(user) {
         deferred.resolve();
     } else {
