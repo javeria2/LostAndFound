@@ -142,11 +142,6 @@ input[type="submit"]:focus {
   background-color: #fff; }
   .navbar .cust-container {
     padding: 10px 0; }
-    .navbar .cust-container span.title {
-      font-family: 'Pacifico';
-      color: #89bdd3;
-      font-size: 2.2rem;
-      letter-spacing: 1.5px; }
     @media only screen and (min-width: 600px) {
       .navbar .cust-container #mobile-home-btn {
         display: none; } }
@@ -160,8 +155,6 @@ input[type="submit"]:focus {
       margin-left: 20px;
       font-weight: 400;
       font-size: 1rem; }
-    .navbar .cust-container .suffix {
-      color: #e6cf8b; }
     .navbar .cust-container .buttons {
       float: right;
       margin-right: 40px;
@@ -170,6 +163,15 @@ input[type="submit"]:focus {
       .navbar .cust-container .buttons i {
         vertical-align: middle;
         font-size: 1.4rem; }
+
+.suffix {
+  color: #e6cf8b; }
+
+span.title {
+  font-family: 'Pacifico';
+  color: #89bdd3;
+  font-size: 2.2rem;
+  letter-spacing: 1.5px; }
 
 #custom-map,
 #search-details {
@@ -319,3 +321,13 @@ input.select-dropdown {
     color: #424242; }
   .item_info #desc {
     color: #616161; }
+
+.cust-comments div#commentTitle {
+  color: #89bdd3;
+  font-family: 'Lato';
+  margin: 30px;
+  padding-top: 30px; }
+
+.cust-comments .comment {
+  font-size: 1.35rem;
+  margin-bottom: 30px !important; }
