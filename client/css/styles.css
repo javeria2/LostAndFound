@@ -331,3 +331,22 @@ input.select-dropdown {
 .cust-comments .comment {
   font-size: 1.35rem;
   margin-bottom: 30px !important; }
+
+.user-profile .img-container {
+  position: absolute;
+  top: -120px; }
+  .user-profile .img-container .avatar {
+    border-radius: 90%;
+    width: 20%;
+    margin: auto; }
+    .user-profile .img-container .avatar img {
+      border: 6px solid #89bdd3; }
+
+.user-profile .bio {
+  text-align: center;
+  margin-top: 130px; }
+  .user-profile .bio .name {
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'Lato';
+    color: #4597ba; }

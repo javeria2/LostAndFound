@@ -131,6 +131,7 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
 
         //post item
         $scope.postItem = function(valid){
+
             data = {
                 "type": this.lost_found,
                 "title": this.item_name,
