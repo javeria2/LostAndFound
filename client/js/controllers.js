@@ -511,9 +511,6 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             return ItemsFactory.getByUserId($routeParams.id);
         }).then(function(items) {
             $scope.items = items['data'];
-            return CommentsFactory.getCommentByUser($scope.user._id);
-        }).then(function(comments) {
-            $scope.comments = comments['data'];
         }, function(error) {
             console.log("Profile page error:", error);
         });
@@ -541,10 +538,17 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             $('.chat-body-wrap').slideToggle('slow');
         });
 
-    
         $scope.filter = { type: "Found" };
         $scope.changeTab = function(type) {
             $scope.filter = type;
+            $scope.comments = [];
+            if (type === "Comment") {
+                CommentsFactory.getCommentByUser($scope.user._id).then(function(comments) {
+                    $scope.comments = comments['data'];
+                }, function(error) {
+                    console.log("Error with comments", error);
+                });
+            }
         }
     }]
 );
