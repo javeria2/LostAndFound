@@ -506,11 +506,14 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
     function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
         //current user
-        var user = JSON.parse(window.localStorage['user']);
+        var currentUser = JSON.parse(window.localStorage['user']);
 
         //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
             $scope.user = user['data'];
+            if ($scope.user._id === currentUser._id) {
+                $('#chat-bubble').hide();
+            }
             return ItemsFactory.getByUserId($routeParams.id);
         }).then(function(items) {
             $scope.items = items['data'];
