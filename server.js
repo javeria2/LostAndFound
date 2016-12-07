@@ -19,7 +19,7 @@ var authRoutes     = require('./routes/auth'),
 //include chat sockets
 var chat           = require('./routes/chat').listen(server);
 
-// Use environment defined port or 3000
+// Use environment defined port or 8080
 var port = process.env.PORT || 8080;
 
 var path = require('path');

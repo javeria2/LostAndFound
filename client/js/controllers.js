@@ -505,9 +505,15 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
 LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory', 'CommentsFactory',
     function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
+        //current user
+        var currentUser = JSON.parse(window.localStorage['user']);
+
         //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
             $scope.user = user['data'];
+            if ($scope.user._id === currentUser._id) {
+                $('#chat-bubble').hide();
+            }
             return ItemsFactory.getByUserId($routeParams.id);
         }).then(function(items) {
             $scope.items = items['data'];
@@ -518,7 +524,7 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
         /**
          * CHAT FUNCTIONALITIES
          */
-        // var socket = io.connect();
+        var socket = io.connect();
         //keep the chat box closed initially
         $('.chat-box').hide();
 
@@ -538,6 +544,54 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             $('.chat-body-wrap').slideToggle('slow');
         });
 
+        $('.msg-input').keypress(function(event) {
+            if(event.keyCode == 13) {
+                var msg = $(this).val();
+                socket.emit('msg-send', {
+                    sender: user.username, 
+                    message: msg, 
+                    img: user.img
+                }); 
+                $(this).val('');
+            }
+        });
+
+        socket.on('msg-new', function(data){
+            //sender
+            if(data.sender === user.username){
+                $('<div class="msg-a"><div class="ui comments">\
+                        <div class="comment">\
+                            <a class="avatar">\
+                              <img src="' + data.img + '">\
+                            </a>\
+                            <div class="content">\
+                                <a class="author">' + data.sender + '</a>\
+                                <div class="text">' + data.message + '</div>\
+                            </div>\
+                        </div>\
+                    </div></div>').insertBefore('.add-msg');
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+
+            } else { 
+                //receiver
+                $('<div class="msg-b"><div class="ui comments">\
+                        <div class="comment">\
+                            <a class="avatar">\
+                              <img src="' + data.img + '">\
+                            </a>\
+                            <div class="content">\
+                                <a class="author">' + data.sender + '</a>\
+                                <div class="text">' + data.message + '</div>\
+                            </div>\
+                        </div>\
+                    </div></div>').insertBefore('.add-msg');
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+
+            }
+        });
+
+        /************************/
+    
         $scope.filter = { type: "Found" };
         $scope.changeTab = function(type) {
             $scope.filter = type;
@@ -577,10 +631,10 @@ LAFControllers.controller('authController', ['$scope', '$http','$location', 'AVA
                 username: $scope.username,
                 password: $scope.password
             };
-            
+
             ItemsFactory.login(user).then(function(user) {
                 window.localStorage['user'] = angular.toJson(user);
-                $location.url('/listings');
+                $location.url('/profile/' + user._id);
             }, function(error) {
                 console.log("Login error", error);
             });
@@ -594,7 +648,7 @@ LAFControllers.controller('authController', ['$scope', '$http','$location', 'AVA
 
             ItemsFactory.signup(user).then(function(user) {
                 window.localStorage['user'] = angular.toJson(user);
-                $location.url('/listings');
+                $location.url('/profile/' + user._id);
             }, function(error) {
                 console.log("Signup error", error);
             });
