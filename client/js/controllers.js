@@ -505,6 +505,9 @@ LAFControllers.controller('ListingsController', ['$scope', 'ItemsFactory',
 LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'ItemsFactory', 'UsersFactory', 'CommentsFactory',
     function($scope, $routeParams, ItemsFactory, UsersFactory, CommentsFactory) {
 
+        //current user
+        var user = JSON.parse(window.localStorage['user']);
+
         //fetch current user
         UsersFactory.getUserById($routeParams.id).then(function(user) {
             $scope.user = user['data'];
@@ -521,7 +524,7 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
         /**
          * CHAT FUNCTIONALITIES
          */
-        // var socket = io.connect();
+        var socket = io.connect();
         //keep the chat box closed initially
         $('.chat-box').hide();
 
@@ -541,6 +544,50 @@ LAFControllers.controller('ProfileController', ['$scope', '$routeParams', 'Items
             $('.chat-body-wrap').slideToggle('slow');
         });
 
+        $('.msg-input').keypress(function(event) {
+            if(event.keyCode == 13) {
+                var msg = $(this).val();
+                socket.emit('send message', {
+                    sender: user.username, 
+                    message: msg, 
+                    img: user.img
+                }); 
+                $(this).val('');
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+            }
+        });
+
+        socket.on('new message', function(data){
+            //sender
+            if(data.sender === user.username){
+                $('<div class="msg-a"><div class="ui comments">\
+                        <div class="comment">\
+                            <a class="avatar">\
+                              <img src="' + data.img + '">\
+                            </a>\
+                            <div class="content">\
+                                <a class="author">' + data.sender + '</a>\
+                                <div class="text">' + data.message + '</div>\
+                            </div>\
+                        </div>\
+                    </div></div>').insertBefore('.add-msg');
+            } else { 
+                //receiver
+                $('<div class="msg-b"><div class="ui comments">\
+                        <div class="comment">\
+                            <a class="avatar">\
+                              <img src="' + data.img + '">\
+                            </a>\
+                            <div class="content">\
+                                <a class="author">' + data.sender + '</a>\
+                                <div class="text">' + data.message + '</div>\
+                            </div>\
+                        </div>\
+                    </div></div>').insertBefore('.add-msg');
+            }
+        });
+
+        /************************/
     
         $scope.filter = { type: "Found" };
         $scope.changeTab = function(type) {
