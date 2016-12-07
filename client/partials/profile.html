@@ -2,11 +2,44 @@
 
 <div class="section"></div>
 <div class="section"></div>
+<div class="section"></div>
+<div class="section"></div>
+<div class="section"></div>
+<div class="section"></div>
+<div class="section"></div>
 
-<h1>{{user.username}}</h1>
-<h4>{{user.about}}</h4>
+<div class="user-profile">
+    <div class="container">
+        <div class="card darken-1">
+            <div class="row">
+                <!-- AVATAR -->
+                <div class="col s12 img-container">
+                    <figure class="avatar"><img ng-src="{{user.img}}" class="circle responsive-img activator"></figure>
+                </div>
 
-<img src="{{user.img}}" data-pin-nopin="true" style="border-radius: 100%;">
+                <!-- BIO -->
+                <div class="col s12 bio">
+                    <p class="name">{{user.username}}</p>
+                    <div class="row">
+                        <div class="col s4"></div>
+                        <div class="col s4"><blockquote>{{user.about}}</blockquote></div>
+                        <div class="col s4"></div>
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a href="#test1" style="color: #4597ba">Lost item</a></li>
+                        <li class="tab col s3"><a class="active" href="#test2" style="color: #4597ba">Found items</a></li>
+                        <li class="tab col s3"><a href="#test4" style="color: #4597ba">Comments</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div ng-repeat="item in items">
     <hr>
@@ -33,3 +66,9 @@
     background: #f5f5f5;
   }
 </style>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('ul.tabs').tabs();
+    });
+</script>

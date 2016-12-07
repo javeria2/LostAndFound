@@ -1,50 +1,61 @@
 <div class="section"></div>
 <div class="section"></div>
 
-<div class="row container login-container">
-  <div class="card" id="login-card" style="">
-    <div class="card-title">Delone.</div>
-    <div class="card-content">
-      <div class='row'>
-        <div class='input-field col s12'>
-          <input class="validate" type="text" autocomplete="false" ng-model="username" id="username">
-          <label for='username'>Enter your username</label>
+
+<div class="row">
+  <div class="col s2"></div>
+  <div class="col s8">
+    <div class="row container login-container">
+      <div class="card" id="login-card">
+        <div class="card-title center" style="padding-top: 20px;"><span class="title">Mag<span class="suffix">pie</span></span></div>
+        <div class="card-content">
+          <div class="container">
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class="validate" type="text" autocomplete="false" ng-model="username" id="username">
+                <label for='username'>Enter your username</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class="validate" type="password" autocomplete="false" id="password" ng-model="password">
+
+                <label for='password'>Enter your password</label>
+              </div>
+              <label style='float: right;'>
+                <a class='spt-text' ng-if="buttonText === 'login'" href='#!'><b>Forgot Password?</b></a>
+              </label>
+              <input type="checkbox" ng-click="showPassword()" id="test5"/>
+              <label style='float: left;' for="test5">
+                <a class='spt-text'><b>Show Password</b></a>
+              </label>
+
+              <input type="text" class="validate" ng-model="about" id="about-me" placeholder="Tell us something about yourself..">
+
+            </div>
+            <br />
+            <div class='row'>
+              <a ng-click="authenticate()" id='btn_login' class='col s12 btn btn-large waves-effect'>{{buttonText}}</a>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class='row'>
-        <div class='input-field col s12'>
-          <input class="validate" type="password" autocomplete="false" id="password" ng-model="password">
-
-          <label for='password'>Enter your password</label>
+        <div class="lower-cap center">
+          <label ng-if="buttonText === 'login'" style="font-size: 1rem;">
+            Not an existing user? <a class='spt-text' ng-click="changeBtText()" style="cursor: pointer;"><b>Sign up instead.</b></a>
+          </label>
+          <label ng-if="buttonText === 'signup'" style="font-size: 1rem;">
+            Existing user? <a class='spt-text' ng-click="loginText()" style="cursor: pointer;"><b>Login instead.</b></a>
+          </label>
         </div>
-        <label style='float: right;'>
-          <a class='spt-text' ng-if="buttonText === 'login'" href='#!'><b>Forgot Password?</b></a>
-        </label>
-        <input type="checkbox" ng-click="showPassword()" id="test5"/>
-        <label style='float: left;' for="test5">
-          <a class='spt-text'><b>Show Password</b></a>
-        </label>
-
-        <input type="text" class="validate" ng-model="about" id="about-me" placeholder="Tell us something about yourself..">
-
+        <div class="section"></div>
       </div>
-      <br />
-      <div class='row'>
-        <a ng-click="authenticate()" id='btn_login' class='col s12 btn btn-large waves-effect'>{{buttonText}}</a>
-      </div>
-    </div>
-
-    <div class="lower-cap">
-      <label ng-if="buttonText === 'login'" style="font-size: 1rem;">
-        Not an existing user? <a class='spt-text' ng-click="changeBtText()"><b>Sign up instead.</b></a>
-      </label>
-      <label ng-if="buttonText === 'signup'" style="font-size: 1rem;">
-        Existing user? <a class='spt-text' ng-click="loginText()"><b>Login instead.</b></a>
-      </label>
     </div>
   </div>
+  <div class="col s2"></div>
 </div>
+
 
 <style type="text/css">
   body {

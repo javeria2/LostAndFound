@@ -131,7 +131,6 @@ LAFControllers.controller('PostItemController', ['Upload', '$scope', 'NgMap', 'U
         };
 
 
-        //post item
         $scope.displayText = "Item name is required!";
 
         $scope.postItem = function(){
